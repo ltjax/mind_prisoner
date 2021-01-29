@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GenerateRoom : MonoBehaviour
 {
+    private static readonly Vector2 ROOM_SIZE = new Vector2(8.0f, 6.0f);
     public Transform room;
     public HashSet<Vector2Int> active = new HashSet<Vector2Int>(); // cell coordinates of existing rooms
     public HashSet<Vector2Int> border = new HashSet<Vector2Int>(); // All potential cells neighboring the exiting rooms
@@ -40,7 +41,7 @@ public class GenerateRoom : MonoBehaviour
     {
         Debug.Assert(room != null);
 
-        Vector2 roomSize = room.localScale;
+        Vector2 roomSize = ROOM_SIZE;
 
         AddRoom(new Vector2Int(0, 0));
 
