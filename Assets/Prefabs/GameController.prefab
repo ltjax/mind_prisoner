@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 704777065276746989}
   - component: {fileID: 1376987709}
   m_Layer: 0
-  m_Name: RoomGenerator
+  m_Name: GameController
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,6 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   room: {fileID: 5607662882725264803, guid: 13b4514061ec2334a854877886a449e7, type: 3}
+  blockW: {fileID: 822294917807268646, guid: b3751ae4555e5e547b151cb03074ff6f, type: 3}
+  blockN: {fileID: 900287952751922053, guid: 68e1cfa7923ecf64aa5bf5171dbc490f, type: 3}
+  blockE: {fileID: 4147088106402963143, guid: 2ecf54c650c7a294baecbdf711494fbc, type: 3}
+  blockS: {fileID: 5743565699989848565, guid: 67fcc69329fa7b648aa084664cd847d4, type: 3}
+  grid: {fileID: 0}
 --- !u!114 &1376987709
 MonoBehaviour:
   m_ObjectHideFlags: 0

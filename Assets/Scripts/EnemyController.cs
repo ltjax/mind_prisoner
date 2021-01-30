@@ -10,7 +10,9 @@ public class EnemyController : MonoBehaviour
     CharacterController MyBody;
     Grid MyGrid;
 
-    Vector2 randomLocalTarget => (Vector2)transform.position + Random.insideUnitCircle * Speed;
+    bool IsDead = false;
+
+    Vector2 RandomLocalTarget => (Vector2)transform.position + Random.insideUnitCircle * Speed;
 
     // Start is called before the first frame update
     void Start()
@@ -20,14 +22,11 @@ public class EnemyController : MonoBehaviour
         CurrentTarget = GetNewTarget();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void FixedUpdate()
     {
+        if(IsDead) {
+            return;
+        }
         Vector2 targetDir = CurrentTarget - (Vector2)transform.position;
         if(targetDir.magnitude < Speed * Time.fixedDeltaTime) {
             MyBody.Move(targetDir);
@@ -35,18 +34,30 @@ public class EnemyController : MonoBehaviour
         } else {
             MyBody.Move(targetDir.normalized * Speed * Time.deltaTime);
         }
-        if(MyBody.velocity.magnitude < 1e-3) {
-            //CurrentTarget = GetNewTarget();
-        }
     }
 
     Vector2 GetNewTarget() {
         var myBounds = MyGrid.GetBoundsLocal(MyGrid.WorldToCell(transform.position));
-        var targetCandidate = randomLocalTarget;
+        var targetCandidate = RandomLocalTarget;
         if(myBounds.Contains(targetCandidate)) {
             return targetCandidate;
         } else {
-            return myBounds.ClosestPoint(randomLocalTarget);
+            return myBounds.ClosestPoint(RandomLocalTarget);
         }
     }
+
+    private void OnTriggerEnter(Collider other) {
+        if(!IsDead && other.CompareTag("Projectile")) {
+            IsDead = true;
+            StartCoroutine(PlayDead());
+        }
+    }
+
+    IEnumerator PlayDead() {
+        Speed = 0;
+        SendMessage("Explode");
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false);
+    }
+
 }
