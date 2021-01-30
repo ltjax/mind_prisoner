@@ -61,7 +61,7 @@ public class UnitController : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             Fire();
         }
@@ -87,6 +87,19 @@ public class UnitController : MonoBehaviour
 
     void Fire()
     {
-        projectileManager.Spawn(transform.position, Vector2.right);
+        var ray = MainCam.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            var direction = hit.point - transform.position;
+            projectileManager.Spawn(transform.position, (Vector2)direction);
+        }
+        // Just intersect with z = 0
+        else if (ray.direction.z != 0.0f)
+        {
+            var lambda = -ray.origin.z / ray.direction.z;
+            var target = ((Vector2)ray.origin) + lambda * ((Vector2)ray.direction);
+            var direction = target - (Vector2)transform.position;
+            projectileManager.Spawn(transform.position, direction);
+        }
     }
 }

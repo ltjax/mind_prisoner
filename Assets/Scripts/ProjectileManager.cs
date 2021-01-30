@@ -38,10 +38,14 @@ public class ProjectileManager : MonoBehaviour
 
     public void Spawn(Vector2 position, Vector2 direction)
     {
+        var length = direction.magnitude;
+        if (length < 0.01)
+            return;
+
         var newProjectile = Acquire();
         newProjectile.name = string.Format("Projectile #{0}", ++counter);
         var controller = newProjectile.GetComponent<ProjectileController>();
-        controller.direction = direction.normalized * 8.0f;
+        controller.direction = direction * (8.0f / length);
         controller.timeLeft = 1.0f;
         newProjectile.transform.position = position;
         alive.Add((newProjectile, controller));
