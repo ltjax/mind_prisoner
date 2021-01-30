@@ -10,6 +10,8 @@ public class ProjectileController : MonoBehaviour
     public bool isHarmless = false;
     private ParticleSystem trailParticles;
 
+    public bool Dying => timeLeft <= 0.0f || isHarmless;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +44,8 @@ public class ProjectileController : MonoBehaviour
         var emission = trailParticles.emission;
         emission.enabled = false;
         trailParticles.Stop();
+        isHarmless = true;
+        GetComponent<SphereCollider>().enabled = false;
     }
 
     public bool ReadyToGo()
@@ -53,8 +57,7 @@ public class ProjectileController : MonoBehaviour
     {
         if (!isHarmless && other.CompareTag("Room"))
         {
-            isHarmless = true;
-            GetComponent<SphereCollider>().enabled = false;
+            Disarm();
         }
     }
 

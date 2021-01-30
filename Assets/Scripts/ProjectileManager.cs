@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProjectileManager : MonoBehaviour
 {
     public GameObject projectile;
+    public ParticleSystem hitEffect;
     private readonly List<(GameObject go, ProjectileController controller)> alive = new List<(GameObject go, ProjectileController controller)>();
     private readonly List<(GameObject go, ProjectileController controller)> hospice = new List<(GameObject go, ProjectileController controller)>();
     private readonly List<GameObject> freeList = new List<GameObject>();
@@ -21,8 +22,9 @@ public class ProjectileManager : MonoBehaviour
         foreach (var (go, controller) in alive)
         {
             controller.timeLeft -= Time.deltaTime;
-            if (controller.timeLeft <= 0.0f)
+            if (controller.Dying)
             {
+                Instantiate(hitEffect, go.transform.position, go.transform.rotation);
                 hospice.Add((go, controller));
                 controller.Disarm();
                 continue;
@@ -30,7 +32,7 @@ public class ProjectileManager : MonoBehaviour
             go.transform.Translate(controller.direction * Time.deltaTime);
         }
 
-        alive.RemoveAll(x => x.controller.timeLeft <= 0.0f);
+        alive.RemoveAll(x => x.controller.Dying);
 
         // This is where projectiles go to die, we just have to wait for it
         foreach (var (go, controller) in hospice)
