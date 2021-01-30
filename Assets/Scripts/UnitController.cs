@@ -55,6 +55,11 @@ public class UnitController : MonoBehaviour {
                 }
             }
 
+            if (Input.GetMouseButtonDown(0))
+            {
+                Fire();
+            }
+
             InputMove = new Vector2(InputMove.x * Mathf.Clamp01(1 - MyBody.velocity.x / CruisingSpeed),
                                     InputMove.y * Mathf.Clamp01(1 - MyBody.velocity.y / CruisingSpeed));
             if(InputMove.magnitude > NEGLIGIBLE) {
