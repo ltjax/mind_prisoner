@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     CharacterController MyBody;
     Grid MyGrid;
     UnitController Player;
+    HealthBar MyHealthBar;
 
     public int HitPoints = 5, MaxHitPoints = 5;
     bool IsDead => HitPoints < 1;
@@ -25,7 +26,9 @@ public class EnemyController : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<UnitController>();
         MyBody = GetComponent<CharacterController>();
         CurrentTarget = GetNewTarget();
-        
+        MyHealthBar = GetComponentInChildren<HealthBar>();
+        MyHealthBar.SetMaxHealth(MaxHitPoints);
+        GetComponentInChildren<SkinnedMeshRenderer>().transform.rotation = Random.rotation;
     }
 
     void FixedUpdate()
@@ -68,6 +71,7 @@ public class EnemyController : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if(!IsDead && other.CompareTag("Projectile")) {
             HitPoints -= 1;
+            MyHealthBar.SetHealth(HitPoints);
             SendMessage("Explode");
             other.gameObject.SendMessage("Explode");
             if(IsDead) {
