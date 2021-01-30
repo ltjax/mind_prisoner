@@ -19,6 +19,14 @@ public class CameraController : MonoBehaviour
     public Grid grid;
     private Vector2? target;
 
+    void Awake() {
+    // Caps the FPS when running in editor at a reasonable number
+#if UNITY_EDITOR
+     QualitySettings.vSyncCount = 0;  // VSync must be disabled
+     Application.targetFrameRate = 45;
+#endif
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,5 +88,9 @@ public class CameraController : MonoBehaviour
     {
         var center = grid.CellToWorld(new Vector3Int(cell.x, cell.y, 0)) + grid.cellSize * 0.5f;
         target = center;
+    }
+
+    void JumpTo(Vector2 TargetPos) {
+        transform.position = new Vector3(TargetPos.x, TargetPos.y, transform.position.z);
     }
 }
