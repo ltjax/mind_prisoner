@@ -36,12 +36,12 @@ public class RoomManager : MonoBehaviour
         Vector2Int.down,
     };
 
-    public Transform room;
+    public Transform room, enemy;
     public Transform blockW;
     public Transform blockN;
     public Transform blockE;
     public Transform blockS;
-    public Grid grid;
+    private Grid grid;
 
     private IReadOnlyList<Transform> BlockList
     {
@@ -270,6 +270,7 @@ public class RoomManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        grid = GameObject.FindGameObjectWithTag("GridGlobal")?.GetComponent<Grid>();
         Debug.Assert(room != null);
         Debug.Assert(grid != null);
 

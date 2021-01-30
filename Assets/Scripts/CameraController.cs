@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
             (new Vector2Int(0, 1), KeyCode.W)
     };
 
-    public Grid grid;
+    private Grid grid;
     private Vector2? target;
 
     void Awake() {
@@ -31,6 +31,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         var camera = GetComponent<Camera>();
+        grid = GameObject.FindGameObjectWithTag("GridGlobal")?.GetComponent<Grid>();
 
         float ratio = Mathf.Tan(Mathf.Deg2Rad * camera.fieldOfView * 0.5f);
         float height = ROOM_Y * 0.5f / ratio + ROOM_HEIGHT;

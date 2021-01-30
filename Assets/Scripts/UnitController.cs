@@ -12,7 +12,7 @@ public class UnitController : MonoBehaviour {
     private CharacterController MyBody;
     private ProjectileManager projectileManager;
 
-    public Grid MyGrid;
+    private Grid MyGrid;
     public Vector3Int MyGridPos;
     private RoomManager RoomManager;
 
@@ -29,6 +29,7 @@ public class UnitController : MonoBehaviour {
     void Start() {
         MySprite = GetComponent<SpriteRenderer>();
         MyAnimator = GetComponent<Animator>();
+        MyGrid = GameObject.FindGameObjectWithTag("GridGlobal")?.GetComponent<Grid>();
         projectileManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<ProjectileManager>();
         MainCam = Camera.main;
         MyBody = GetComponent<CharacterController>();
