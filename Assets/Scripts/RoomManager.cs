@@ -42,9 +42,9 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    private readonly Dictionary<Vector2Int, ConfiguredRoom> active = new Dictionary<Vector2Int, ConfiguredRoom>(); 
-    private int roomId=1;
-    private int elementId=1;
+    private readonly Dictionary<Vector2Int, ConfiguredRoom> active = new Dictionary<Vector2Int, ConfiguredRoom>();
+    private int roomId = 1;
+    private int elementId = 1;
 
     List<Vector2Int> BorderFor(Dictionary<Vector2Int, ConfiguredRoom> actives)
     {
@@ -70,7 +70,7 @@ public class RoomManager : MonoBehaviour
         var instance = Instantiate(room);
         instance.name = string.Format("Room ({0},{1}) / #{2}", cell.x, cell.y, roomId++);
         instance.position = position;
-        instance.rotation = Quaternion.AngleAxis(-90.0f, new Vector3(1.0f, 0.0f, 0.0f));
+        //instance.rotation = Quaternion.AngleAxis(-90.0f, new Vector3(1.0f, 0.0f, 0.0f));
 
         var result = new ConfiguredRoom(instance);
 
@@ -80,7 +80,7 @@ public class RoomManager : MonoBehaviour
     public void RemoveRoom(Vector2Int toDelete, Vector2Int floodStart)
     {
         var visited = new HashSet<Vector2Int>();
-        var todo = new List<Vector2Int>{ floodStart };
+        var todo = new List<Vector2Int> { floodStart };
 
         while (todo.Count != 0)
         {
@@ -112,8 +112,9 @@ public class RoomManager : MonoBehaviour
                     continue;
                 }
                 GameObject.Destroy(element);
-            }                
+            }
         }
+        UpdateTransitions(deletedRooms.Select(x => x.Key));
     }
 
     public ISet<Vector2Int> Hull(IEnumerable<Vector2Int> original)
@@ -148,14 +149,22 @@ public class RoomManager : MonoBehaviour
             for (int i = 0; i < 4; ++i)
             {
                 bool hasNeighbor = active.ContainsKey(each.Key + NEIGHBORS[i]);
-                
-                if (each.Value.doorElement[i] == null && !hasNeighbor)
+                //bool hadNeighborBefore = each.Value.doorElement[i] != null;
+                //if (hadNeighborBefore == hasNeighbor)
+                //    continue;
+
+                if (hasNeighbor)
+                {
+                    //GameObject.Destroy(each.Value.doorElement[i].gameObject);
+                }
+                else
                 {
                     var instance = Instantiate(blockList[i]);
                     var position = grid.CellToLocal(new Vector3Int(cell.x, cell.y, 0));
                     instance.position = position;
-                    instance.rotation = Quaternion.AngleAxis(-90.0f, new Vector3(1.0f, 0.0f, 0.0f));
+                    //instance.rotation = Quaternion.AngleAxis(-90.0f, new Vector3(1.0f, 0.0f, 0.0f));
                     instance.name = string.Format("Block ({0},{1}) d{2} / #{3}", cell.x, cell.y, i, elementId++);
+                    each.Value.doorElement[i] = instance;
                 }
             }
         }
@@ -168,7 +177,8 @@ public class RoomManager : MonoBehaviour
         Debug.Assert(grid != null);
 
 
-        if(Debug.isDebugBuild) {
+        if (Debug.isDebugBuild)
+        {
             Random.InitState(1234567);
         }
 
