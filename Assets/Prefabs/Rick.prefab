@@ -66,6 +66,9 @@ MonoBehaviour:
   StepCycle:
   - {fileID: 8300000, guid: 0b44630f255caeb448fda8f144f5da3c, type: 3}
   - {fileID: 8300000, guid: 21762e32e9dc7f74f903929bb9f64133, type: 3}
+  FireSounds:
+  - {fileID: 8300000, guid: f7c172608c8e9b844b28ea5527a2ef28, type: 3}
+  - {fileID: 8300000, guid: 2fc02d9a5b593da47b8f9ba937c64d91, type: 3}
 --- !u!212 &4976632324547077184
 SpriteRenderer:
   m_ObjectHideFlags: 0

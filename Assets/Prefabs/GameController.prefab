@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 704777065276746978}
   - component: {fileID: 704777065276746989}
+  - component: {fileID: 1376987709}
   m_Layer: 0
   m_Name: RoomGenerator
   m_TagString: GameController
@@ -44,3 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   room: {fileID: 5607662882725264803, guid: 13b4514061ec2334a854877886a449e7, type: 3}
+--- !u!114 &1376987709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704777065276746988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 656fbca16b131414fa51605b2d7f52d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 1448503793659803473, guid: 1a52f5a58d98a3c43b963f9b6f7159df,
+    type: 3}
