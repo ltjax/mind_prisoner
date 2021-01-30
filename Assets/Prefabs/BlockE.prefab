@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4147088106402963143}
   - component: {fileID: 1018571338545779042}
   - component: {fileID: 3010170872330364328}
+  - component: {fileID: -1995515377021077188}
   m_Layer: 0
   m_Name: BlockE
   m_TagString: Untagged
@@ -79,3 +80,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &-1995515377021077188
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3658816280084153469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5784765355937743974, guid: fee2af2065d99ac4c99e071b346c327e, type: 3}
