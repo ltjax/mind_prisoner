@@ -55,6 +55,9 @@ public class UnitController : MonoBehaviour {
             if(Input.GetMouseButtonDown(0)) {
                 SendMessage("Fire");
             }
+            if(Input.GetMouseButtonDown(1)) {
+                SendMessage(nameof(ClosePath));
+            }
         }
 
         Vector3Int newGridPos = MyGrid.WorldToCell(transform.position);
@@ -95,5 +98,10 @@ public class UnitController : MonoBehaviour {
             var direction = target - (Vector2)transform.position;
             projectileManager.Spawn(transform.position, direction);
         }
+    }
+
+    void ClosePath()
+    {
+        RoomManager.ClosePathAt(transform.position);
     }
 }
