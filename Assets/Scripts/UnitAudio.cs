@@ -7,6 +7,7 @@ public class UnitAudio : MonoBehaviour {
     [Range(0, 1)]
     public float Volume;
     public AudioClip[] StepCycle, FireSounds;
+    public AudioClip ExplodeSound;
     private GameObject mySpeaker;
     private List<AudioSource> Sources;
     private int currentStep = 0;
@@ -14,7 +15,6 @@ public class UnitAudio : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Assert(StepCycle.Length > 0);
         mySpeaker = SpawnSpeaker();
     }
 
@@ -52,11 +52,13 @@ public class UnitAudio : MonoBehaviour {
     }
 
     public void PlayStep() {
+        Debug.Assert(StepCycle.Length > 0);
         PlayClip(StepCycle[currentStep]);
         currentStep = (currentStep + 1) % StepCycle.Length;
     }
 
     public void Fire() {
+        Debug.Assert(FireSounds.Length > 0);
         PlayClip(FireSounds[Random.Range(0, FireSounds.Length)]);
     }
 
@@ -68,5 +70,10 @@ public class UnitAudio : MonoBehaviour {
         result.transform.localPosition = Vector3.zero;
         result.transform.localRotation = Quaternion.identity;
         return result;
+    }
+
+    private void Explode() {
+        Debug.Assert(ExplodeSound != null);
+        PlayClip(ExplodeSound);
     }
 }

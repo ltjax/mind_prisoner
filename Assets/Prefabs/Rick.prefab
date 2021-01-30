@@ -69,6 +69,7 @@ MonoBehaviour:
   FireSounds:
   - {fileID: 8300000, guid: f7c172608c8e9b844b28ea5527a2ef28, type: 3}
   - {fileID: 8300000, guid: 2fc02d9a5b593da47b8f9ba937c64d91, type: 3}
+  ExplodeSound: {fileID: 0}
 --- !u!212 &4976632324547077184
 SpriteRenderer:
   m_ObjectHideFlags: 0

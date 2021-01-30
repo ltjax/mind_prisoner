@@ -34,7 +34,7 @@ public class ProjectileManager : MonoBehaviour
     }
 
 
-    public void Spawn(Vector2 position, Vector2 direction)
+    public void Spawn(Vector3 fromPosition, Vector2 direction)
     {
         var length = direction.magnitude;
         if (length < 0.01)
@@ -45,7 +45,7 @@ public class ProjectileManager : MonoBehaviour
         var controller = newProjectile.GetComponent<ProjectileController>();
         controller.direction = direction * (12.0f / length);
         controller.timeLeft = 3.0f;
-        newProjectile.transform.position = position;
+        newProjectile.transform.position = fromPosition;
         alive.Add((newProjectile, controller));
     }
 
@@ -57,6 +57,6 @@ public class ProjectileManager : MonoBehaviour
             result.SetActive(true);
             return result;
         }
-        return GameObject.Instantiate(projectile);
+        return Instantiate(projectile);
     }
 }
