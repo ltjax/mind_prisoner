@@ -8,6 +8,7 @@ public class UnitController : MonoBehaviour
     public float CruisingSpeed;
     private SpriteRenderer MySprite;
     private Animator MyAnimator;
+    private ProjectileManager projectileManager;
 
     public Grid MyGrid;
     public Vector3Int MyGridPos;
@@ -19,8 +20,8 @@ public class UnitController : MonoBehaviour
     {
         MySprite = GetComponent<SpriteRenderer>();
         MyAnimator = GetComponent<Animator>();
+        projectileManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<ProjectileManager>();
         MainCam = Camera.main;
-
     }
 
     void Update()
@@ -60,6 +61,11 @@ public class UnitController : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Fire();
+        }
+
         Vector2 InputMove = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * CruisingSpeed;
         if (InputMove.sqrMagnitude > 1e-5)
         {
@@ -79,4 +85,8 @@ public class UnitController : MonoBehaviour
         }
     }
 
+    void Fire()
+    {
+        projectileManager.Spawn(transform.position, Vector2.right);
+    }
 }

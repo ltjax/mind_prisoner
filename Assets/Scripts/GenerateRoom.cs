@@ -54,8 +54,7 @@ public class GenerateRoom : MonoBehaviour
 
         while (todo.Count != 0)
         {
-            var current = todo.Last();
-            todo.RemoveAt(todo.Count - 1);
+            var current = todo.TakeLast();
 
             if (!active.ContainsKey(current))
                 continue;
