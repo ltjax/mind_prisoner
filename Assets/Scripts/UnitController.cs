@@ -9,7 +9,7 @@ public class UnitController : MonoBehaviour {
     public float CruisingSpeed;
     private SpriteRenderer MySprite;
     private Animator MyAnimator;
-    private Rigidbody MyBody;
+    private CharacterController MyBody;
     private ProjectileManager projectileManager;
 
     public Grid MyGrid;
@@ -29,9 +29,9 @@ public class UnitController : MonoBehaviour {
     void Start() {
         MySprite = GetComponent<SpriteRenderer>();
         MyAnimator = GetComponent<Animator>();
-        projectileManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<ProjectileManager>();
+        projectileManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<ProjectileManager>();
         MainCam = Camera.main;
-        MyBody = GetComponent<Rigidbody>();
+        MyBody = GetComponent<CharacterController>();
         RoomManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<RoomManager>();
 
         StartCoroutine(AnimationControl());
@@ -48,25 +48,12 @@ public class UnitController : MonoBehaviour {
             }
             return;
         } else {
-            Vector2 InputMove = Vector2.zero;
-            foreach(var (key, offset) in DirectionTable) {
-                if(Input.GetKey(key)) {
-                    InputMove += offset;
-                }
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                Fire();
-            }
-
-            InputMove = new Vector2(InputMove.x * Mathf.Clamp01(1 - MyBody.velocity.x / CruisingSpeed),
-                                    InputMove.y * Mathf.Clamp01(1 - MyBody.velocity.y / CruisingSpeed));
+            Vector2 InputMove = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * CruisingSpeed;
             if(InputMove.magnitude > NEGLIGIBLE) {
-                MyBody.AddForce(InputMove);
-            } else if(MyBody.velocity.magnitude > NEGLIGIBLE) {
-                // Counter-force to stop immediately
-                MyBody.AddForce(-MyBody.velocity * MyBody.mass / Time.fixedDeltaTime);
+                MyBody.Move(InputMove * Time.deltaTime);
+            }
+            if(Input.GetMouseButtonDown(0)) {
+                Fire();
             }
         }
 
@@ -94,17 +81,15 @@ public class UnitController : MonoBehaviour {
             MyAnimator.SetFloat("Velocity_Vertical", Vel.y);
         }
     }
-    void Fire()
-    {
+	
+    void Fire() {
         var ray = MainCam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
+        if(Physics.Raycast(ray, out RaycastHit hit)) {
             var direction = hit.point - transform.position;
             projectileManager.Spawn(transform.position, (Vector2)direction);
         }
         // Just intersect with z = 0
-        else if (ray.direction.z != 0.0f)
-        {
+        else if(ray.direction.z != 0.0f) {
             var lambda = -ray.origin.z / ray.direction.z;
             var target = ((Vector2)ray.origin) + lambda * ((Vector2)ray.direction);
             var direction = target - (Vector2)transform.position;
