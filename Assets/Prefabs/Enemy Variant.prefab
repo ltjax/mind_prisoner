@@ -81,6 +81,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: e9272ce5a7a89e14bac8438eead83af2,
+        type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: e9272ce5a7a89e14bac8438eead83af2,
+        type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: 0.114355475
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: e9272ce5a7a89e14bac8438eead83af2,
+        type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 0.03964612
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: e9272ce5a7a89e14bac8438eead83af2,
+        type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: -0.097290635
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: e9272ce5a7a89e14bac8438eead83af2,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.7503321
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: e9272ce5a7a89e14bac8438eead83af2,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.62631977
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: e9272ce5a7a89e14bac8438eead83af2,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.8707954
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e9272ce5a7a89e14bac8438eead83af2,
         type: 3}
       propertyPath: m_Name
