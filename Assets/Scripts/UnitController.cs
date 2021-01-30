@@ -14,7 +14,7 @@ public class UnitController : MonoBehaviour {
 
     public Grid MyGrid;
     public Vector3Int MyGridPos;
-    private GenerateRoom RoomManager;
+    private RoomManager RoomManager;
 
     private List<(KeyCode key, Vector2Int offset)> DirectionTable = new List<(KeyCode key, Vector2Int offset)> {
                 (KeyCode.LeftArrow, Vector2Int.left   ),
@@ -32,7 +32,7 @@ public class UnitController : MonoBehaviour {
         projectileManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<ProjectileManager>();
         MainCam = Camera.main;
         MyBody = GetComponent<Rigidbody>();
-        RoomManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<GenerateRoom>();
+        RoomManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<RoomManager>();
 
         StartCoroutine(AnimationControl());
     }
