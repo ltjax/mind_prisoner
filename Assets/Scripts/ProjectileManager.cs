@@ -22,6 +22,7 @@ public class ProjectileManager : MonoBehaviour
             controller.timeLeft -= Time.deltaTime;
             if (controller.timeLeft <= 0.0f)
             {
+                // TODO: need to "play out" the particle system before reusing it
                 go.SetActive(false);
                 freeList.Add(go);
                 continue;
@@ -32,9 +33,6 @@ public class ProjectileManager : MonoBehaviour
         alive.RemoveAll(x => x.controller.timeLeft <= 0.0f);
     }
 
-    private void FixedUpdate()
-    {
-    }
 
     public void Spawn(Vector2 position, Vector2 direction)
     {
@@ -45,8 +43,8 @@ public class ProjectileManager : MonoBehaviour
         var newProjectile = Acquire();
         newProjectile.name = string.Format("Projectile #{0}", ++counter);
         var controller = newProjectile.GetComponent<ProjectileController>();
-        controller.direction = direction * (8.0f / length);
-        controller.timeLeft = 1.0f;
+        controller.direction = direction * (12.0f / length);
+        controller.timeLeft = 3.0f;
         newProjectile.transform.position = position;
         alive.Add((newProjectile, controller));
     }
