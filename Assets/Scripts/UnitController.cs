@@ -30,8 +30,4 @@ public class UnitController : MonoBehaviour {
             MyAnimator.SetFloat("Velocity_Vertical", Vel.y);
         }
     }
-
-    private void PlayStep() {
-        // do nothing
-    }
 }
