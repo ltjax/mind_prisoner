@@ -7,6 +7,14 @@ public class CameraController : MonoBehaviour
     private static readonly float ROOM_Y = 6.0f;
     private static readonly float ROOM_HEIGHT = 3.0f;
 
+    void Awake() {
+    // Caps the FPS when running in editor at a reasonable number
+#if UNITY_EDITOR
+     QualitySettings.vSyncCount = 0;  // VSync must be disabled
+     Application.targetFrameRate = 45;
+#endif
+    }
+
     // Start is called before the first frame update
     void Start()
     {

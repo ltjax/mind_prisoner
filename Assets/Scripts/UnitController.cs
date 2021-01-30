@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour {
 
-    private const float CruisingSpeed = 2f;
+    public float CruisingSpeed;
     private SpriteRenderer MySprite;
     private Animator MyAnimator;
 
