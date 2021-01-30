@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - Enemy
   - GridGlobal
+  - Room
   layers:
   - Default
   - TransparentFX

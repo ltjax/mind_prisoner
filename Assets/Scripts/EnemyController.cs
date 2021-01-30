@@ -34,6 +34,11 @@ public class EnemyController : MonoBehaviour
         } else {
             MyBody.Move(targetDir.normalized * Speed * Time.deltaTime);
         }
+
+        // Sanity check
+        if(MyBody.velocity.magnitude < 1e-3) {
+            CurrentTarget = GetNewTarget();
+        }
     }
 
     Vector2 GetNewTarget() {

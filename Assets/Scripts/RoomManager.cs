@@ -41,7 +41,7 @@ public class RoomManager : MonoBehaviour
     public Transform blockN;
     public Transform blockE;
     public Transform blockS;
-    private Grid grid;
+    private Grid grid, enemyGrid;
 
     private IReadOnlyList<Transform> BlockList
     {
@@ -155,6 +155,8 @@ public class RoomManager : MonoBehaviour
         var result = new ConfiguredRoom(instance);
 
         active.Add(cell, result);
+
+        PopulateRoomWithEnemies(result);
     }
 
     public void RemoveRoom(Vector2Int toDelete, Vector2Int floodStart)
@@ -271,6 +273,7 @@ public class RoomManager : MonoBehaviour
     void Start()
     {
         grid = GameObject.FindGameObjectWithTag("GridGlobal")?.GetComponent<Grid>();
+        enemyGrid = GameObject.FindGameObjectWithTag("Grid")?.GetComponent<Grid>();
         Debug.Assert(room != null);
         Debug.Assert(grid != null);
 
@@ -290,5 +293,22 @@ public class RoomManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    void PopulateRoomWithEnemies(ConfiguredRoom room) {
+        // Pick a number from 2 to 5
+        var enemyCount = Random.Range(2, 6);
+        for(int i = 0; i < enemyCount; i++) {
+            var nEnemy = Instantiate(enemy, GetRandomLocalEnemyPosition(room.room), Random.rotation, room.room);
+            nEnemy.GetComponent<EnemyController>().Speed = Random.Range(0.2f, 1f);
+            nEnemy.name = "Enemy Blob [" + Random.Range(10000, 100000) + "]";
+        }
+    }
+
+    Vector3 GetRandomLocalEnemyPosition(Transform roomTransform) {
+        var roomBounds = enemyGrid.GetBoundsLocal(enemyGrid.WorldToCell(roomTransform.position));
+        return new Vector3(roomTransform.position.x + (Random.value - 0.5f) * roomBounds.size.x,
+                           roomTransform.position.y + (Random.value - 0.5f) * roomBounds.size.y,
+                           -0.5f);
     }
 }

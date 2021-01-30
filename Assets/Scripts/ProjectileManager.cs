@@ -55,6 +55,7 @@ public class ProjectileManager : MonoBehaviour
         {
             var result = freeList.TakeLast();
             result.SetActive(true);
+            result.SendMessage("Rearm");
             return result;
         }
         return Instantiate(projectile);
