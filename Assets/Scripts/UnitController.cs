@@ -8,10 +8,17 @@ public class UnitController : MonoBehaviour {
     private SpriteRenderer MySprite;
     private Animator MyAnimator;
 
+    public Grid MyGrid;
+    public Vector3Int MyGridPos;
+
+    private Camera MainCam;
+
     // Start is called before the first frame update
     void Start() {
         MySprite = GetComponent<SpriteRenderer>();
         MyAnimator = GetComponent<Animator>();
+        MainCam = Camera.main;
+
     }
 
     void Update() {
@@ -30,4 +37,10 @@ public class UnitController : MonoBehaviour {
             MyAnimator.SetFloat("Velocity_Vertical", Vel.y);
         }
     }
+
+    void FixedUpdate() {
+        MainCam.SendMessage("JumpTo", (Vector2)transform.position);
+        MyGridPos = MyGrid.WorldToCell(transform.position);
+    }
+
 }

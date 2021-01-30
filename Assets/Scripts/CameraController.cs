@@ -33,4 +33,8 @@ public class CameraController : MonoBehaviour
     void Update()
     {
     }
+
+    void JumpTo(Vector2 TargetPos) {
+        transform.position = new Vector3(TargetPos.x, TargetPos.y, transform.position.z);
+    }
 }
