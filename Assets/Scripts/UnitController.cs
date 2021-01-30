@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitController : MonoBehaviour {
+public class UnitController : MonoBehaviour
+{
 
     public float CruisingSpeed;
     private SpriteRenderer MySprite;
@@ -14,33 +15,65 @@ public class UnitController : MonoBehaviour {
     private Camera MainCam;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         MySprite = GetComponent<SpriteRenderer>();
         MyAnimator = GetComponent<Animator>();
         MainCam = Camera.main;
 
     }
 
-    void Update() {
-        Vector2 InputMove = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * CruisingSpeed;
-        if(InputMove.sqrMagnitude > 1e-5) {
-            transform.Translate(InputMove * Time.deltaTime);
-            SetAnimatorVelocity(InputMove);
-        } else {
-            SetAnimatorVelocity(Vector2.zero);
-        }
+    void Update()
+    {
     }
 
-    private void SetAnimatorVelocity(Vector2 Vel) {
-        if(MyAnimator != null) {
+    private void SetAnimatorVelocity(Vector2 Vel)
+    {
+        if (MyAnimator != null)
+        {
             MyAnimator.SetFloat("Velocity_Horizontal", Vel.x);
             MyAnimator.SetFloat("Velocity_Vertical", Vel.y);
         }
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+        {
+            var table = new List<(KeyCode key, Vector2Int offset)>
+            {
+                (KeyCode.LeftArrow, Vector2Int.left   ),
+                (KeyCode.RightArrow, Vector2Int.right ),
+                (KeyCode.UpArrow, Vector2Int.up       ),
+                (KeyCode.DownArrow, Vector2Int.down   )
+            };
+
+            var roomManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GenerateRoom>();
+            foreach (var (key, offset) in table)
+            {
+                if (Input.GetKeyDown(key))
+                {
+                    roomManager.RemoveRoom((Vector2Int)MyGridPos + offset, (Vector2Int)MyGridPos);
+                    break;
+                }
+            }
+            return;
+        }
+
+        Vector2 InputMove = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * CruisingSpeed;
+        if (InputMove.sqrMagnitude > 1e-5)
+        {
+            transform.Translate(InputMove * Time.deltaTime);
+            SetAnimatorVelocity(InputMove);
+        }
+        else
+        {
+            SetAnimatorVelocity(Vector2.zero);
+        }
+
         Vector3Int newGridPos = MyGrid.WorldToCell(transform.position);
-        if(newGridPos != MyGridPos) {
+        if (newGridPos != MyGridPos)
+        {
             MyGridPos = newGridPos;
             MainCam.SendMessage(nameof(CameraController.MoveToCell), (Vector2Int)MyGridPos);
         }
