@@ -25,6 +25,7 @@ public class EnemyController : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<UnitController>();
         MyBody = GetComponent<CharacterController>();
         CurrentTarget = GetNewTarget();
+        
     }
 
     void FixedUpdate()
@@ -68,6 +69,7 @@ public class EnemyController : MonoBehaviour
         if(!IsDead && other.CompareTag("Projectile")) {
             HitPoints -= 1;
             SendMessage("Explode");
+            other.gameObject.SendMessage("Explode");
             if(IsDead) {
                 StartCoroutine(PlayDead());
             }

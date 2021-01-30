@@ -276,6 +276,7 @@ public class RoomManager : MonoBehaviour
         enemyGrid = GameObject.FindGameObjectWithTag("Grid")?.GetComponent<Grid>();
         Debug.Assert(room != null);
         Debug.Assert(grid != null);
+        Debug.Assert(enemyGrid != null);
 
         CreateRoom(new Vector2Int(0, 0));
 
@@ -299,7 +300,7 @@ public class RoomManager : MonoBehaviour
         // Pick a number from 2 to 5
         var enemyCount = Random.Range(2, 6);
         for(int i = 0; i < enemyCount; i++) {
-            var nEnemy = Instantiate(enemy, GetRandomLocalEnemyPosition(room.room), Random.rotation, room.room);
+            var nEnemy = Instantiate(enemy, GetRandomLocalEnemyPosition(room.room), Quaternion.identity, room.room);
             nEnemy.name = "Enemy Blob [" + Random.Range(10000, 100000) + "]";
             var nEnemyControl = nEnemy.GetComponent<EnemyController>();
             nEnemyControl.Speed = nEnemyControl.InitSpeed = Random.Range(0.2f, 1f);

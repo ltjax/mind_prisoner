@@ -6,6 +6,7 @@ public class ProjectileManager : MonoBehaviour
 {
     public GameObject projectile;
     private readonly List<(GameObject go, ProjectileController controller)> alive = new List<(GameObject go, ProjectileController controller)>();
+    private readonly List<(GameObject go, ProjectileController controller)> hospice = new List<(GameObject go, ProjectileController controller)>();
     private readonly List<GameObject> freeList = new List<GameObject>();
     private int counter = 0;
 
@@ -22,15 +23,26 @@ public class ProjectileManager : MonoBehaviour
             controller.timeLeft -= Time.deltaTime;
             if (controller.timeLeft <= 0.0f)
             {
-                // TODO: need to "play out" the particle system before reusing it
-                go.SetActive(false);
-                freeList.Add(go);
+                hospice.Add((go, controller));
+                controller.Disarm();
                 continue;
             }
             go.transform.Translate(controller.direction * Time.deltaTime);
         }
 
         alive.RemoveAll(x => x.controller.timeLeft <= 0.0f);
+
+        // This is where projectiles go to die, we just have to wait for it
+        foreach (var (go, controller) in hospice)
+        {
+            if (controller.ReadyToGo())
+            {
+                freeList.Add(go);
+                go.SetActive(false);
+            }
+        }
+
+        hospice.RemoveAll(x => !x.go.activeSelf);
     }
 
 
