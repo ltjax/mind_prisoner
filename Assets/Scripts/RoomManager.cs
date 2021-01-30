@@ -161,16 +161,17 @@ public class RoomManager : MonoBehaviour
         }
     }
 
+    void Awake() {
+        if(Debug.isDebugBuild) {
+            Random.InitState(1234567);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         Debug.Assert(room != null);
         Debug.Assert(grid != null);
-
-
-        if(Debug.isDebugBuild) {
-            Random.InitState(1234567);
-        }
 
         AddRoom(new Vector2Int(0, 0));
 
