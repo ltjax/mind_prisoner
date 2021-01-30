@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ed7a2482b3a3d4995eee4a7a487d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Volume: 1
+  Volume: 0.2
   StepCycle:
   - {fileID: 8300000, guid: 0b44630f255caeb448fda8f144f5da3c, type: 3}
   - {fileID: 8300000, guid: 21762e32e9dc7f74f903929bb9f64133, type: 3}
