@@ -38,7 +38,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Velocity_Vertical
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -744540536994583783}
   m_Solo: 0
@@ -63,7 +63,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Velocity_Horizontal
-    m_EventTreshold: -0.1
+    m_EventTreshold: -0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -744540536994583783}
   m_Solo: 0
@@ -88,7 +88,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Velocity_Vertical
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -744540536994583783}
   m_Solo: 0
@@ -186,7 +186,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Velocity_Vertical
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -744540536994583783}
   m_Solo: 0
@@ -325,10 +325,10 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Velocity_Vertical
-    m_EventTreshold: 0
+    m_EventTreshold: 0.05
   - m_ConditionMode: 4
     m_ConditionEvent: Velocity_Horizontal
-    m_EventTreshold: -0.1
+    m_EventTreshold: -0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7097694667604356263}
   m_Solo: 0
@@ -337,7 +337,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_ExitTime: 0.5
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -356,10 +356,10 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 3
     m_ConditionEvent: Velocity_Horizontal
-    m_EventTreshold: -0.1
+    m_EventTreshold: -0.05
   - m_ConditionMode: 4
     m_ConditionEvent: Velocity_Horizontal
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -926999709798451421}
   m_Solo: 0
@@ -368,7 +368,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_ExitTime: 0.5
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -384,7 +384,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Velocity_Horizontal
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -744540536994583783}
   m_Solo: 0
@@ -409,7 +409,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Velocity_Vertical
-    m_EventTreshold: 0
+    m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -744540536994583783}
   m_Solo: 0
@@ -434,7 +434,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Velocity_Vertical
-    m_EventTreshold: 0
+    m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -744540536994583783}
   m_Solo: 0
@@ -462,10 +462,10 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: Velocity_Horizontal
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.05
   - m_ConditionMode: 3
     m_ConditionEvent: Velocity_Horizontal
-    m_EventTreshold: -0.1
+    m_EventTreshold: -0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -329418531294469119}
   m_Solo: 0
@@ -474,7 +474,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_ExitTime: 0.5
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -490,10 +490,10 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Velocity_Vertical
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.05
   - m_ConditionMode: 4
     m_ConditionEvent: Velocity_Horizontal
-    m_EventTreshold: -0.1
+    m_EventTreshold: -0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8614441702384090962}
   m_Solo: 0
@@ -502,7 +502,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_ExitTime: 0.5
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -546,10 +546,10 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Velocity_Vertical
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.05
   - m_ConditionMode: 3
     m_ConditionEvent: Velocity_Horizontal
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5324573874180782861}
   m_Solo: 0
@@ -558,7 +558,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_ExitTime: 0.5
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -574,7 +574,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Velocity_Vertical
-    m_EventTreshold: -0.1
+    m_EventTreshold: -0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -744540536994583783}
   m_Solo: 0
@@ -583,7 +583,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0
+  m_ExitTime: 0.5
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -626,10 +626,10 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Velocity_Vertical
-    m_EventTreshold: 0
+    m_EventTreshold: 0.05
   - m_ConditionMode: 3
     m_ConditionEvent: Velocity_Horizontal
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.05
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5630195012916642999}
   m_Solo: 0
@@ -638,7 +638,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_ExitTime: 0.5
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
