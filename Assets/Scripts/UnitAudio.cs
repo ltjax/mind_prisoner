@@ -6,7 +6,7 @@ public class UnitAudio : MonoBehaviour {
 
     [Range(0, 1)]
     public float Volume;
-    public AudioClip[] StepCycle;
+    public AudioClip[] StepCycle, FireSounds;
     private GameObject mySpeaker;
     private List<AudioSource> Sources;
     private int currentStep = 0;
@@ -54,6 +54,10 @@ public class UnitAudio : MonoBehaviour {
     public void PlayStep() {
         PlayClip(StepCycle[currentStep]);
         currentStep = (currentStep + 1) % StepCycle.Length;
+    }
+
+    public void Fire() {
+        PlayClip(FireSounds[Random.Range(0, FireSounds.Length)]);
     }
 
     // Spawns empty subordinate object for playing sounds

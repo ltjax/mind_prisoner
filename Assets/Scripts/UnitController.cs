@@ -53,7 +53,7 @@ public class UnitController : MonoBehaviour {
                 MyBody.Move(InputMove * Time.deltaTime);
             }
             if(Input.GetMouseButtonDown(0)) {
-                Fire();
+                SendMessage("Fire");
             }
         }
 
