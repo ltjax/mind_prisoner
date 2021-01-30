@@ -56,6 +56,7 @@ public class GenerateRoom : MonoBehaviour
             var position = roomSize * each;
             var instance = GameObject.Instantiate(room);
             instance.position = position;
+            instance.rotation = Quaternion.AngleAxis(-90.0f, new Vector3(1.0f, 0.0f, 0.0f));
         }
     }
 
