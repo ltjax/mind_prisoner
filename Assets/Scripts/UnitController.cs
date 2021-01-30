@@ -61,11 +61,6 @@ public class UnitController : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-        {
-            Fire();
-        }
-
         Vector2 InputMove = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * CruisingSpeed;
         if (InputMove.sqrMagnitude > 1e-5)
         {
