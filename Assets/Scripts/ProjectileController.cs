@@ -20,7 +20,6 @@ public class ProjectileController : MonoBehaviour
     }
     
     void OnTriggerEnter(Collider other) {
-        Debug.Log(other);
         if(!IsHarmless && other.CompareTag("Room")) {
             IsHarmless = true;
             GetComponent<SphereCollider>().enabled = false;

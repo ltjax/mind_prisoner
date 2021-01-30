@@ -195,14 +195,14 @@ public class RoomManager : MonoBehaviour
 
         foreach (var toDespawn in deletedRooms)
         {
-            GameObject.Destroy(toDespawn.Value.room.gameObject);
+            Destroy(toDespawn.Value.room.gameObject);
             foreach (var element in toDespawn.Value.doorElement)
             {
                 if (element == null)
                 {
                     continue;
                 }
-                GameObject.Destroy(element.gameObject);
+                Destroy(element.gameObject);
             }
             active.Remove(toDespawn.Key);
         }
@@ -249,7 +249,7 @@ public class RoomManager : MonoBehaviour
 
                 if (hasNeighbor)
                 {
-                    GameObject.Destroy(each.Value.doorElement[i].gameObject);
+                    Destroy(each.Value.doorElement[i].gameObject);
                 }
                 else
                 {
@@ -300,8 +300,10 @@ public class RoomManager : MonoBehaviour
         var enemyCount = Random.Range(2, 6);
         for(int i = 0; i < enemyCount; i++) {
             var nEnemy = Instantiate(enemy, GetRandomLocalEnemyPosition(room.room), Random.rotation, room.room);
-            nEnemy.GetComponent<EnemyController>().Speed = Random.Range(0.2f, 1f);
             nEnemy.name = "Enemy Blob [" + Random.Range(10000, 100000) + "]";
+            var nEnemyControl = nEnemy.GetComponent<EnemyController>();
+            nEnemyControl.Speed = nEnemyControl.InitSpeed = Random.Range(0.2f, 1f);
+            nEnemyControl.HitPoints = nEnemyControl.MaxHitPoints = Random.Range(3, 7);
         }
     }
 
