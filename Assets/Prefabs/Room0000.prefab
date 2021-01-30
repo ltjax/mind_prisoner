@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5607662882725264803}
   - component: {fileID: 8826404612819153414}
   - component: {fileID: 6744500475353401036}
+  - component: {fileID: 6573481140209198672}
   m_Layer: 0
-  m_Name: RoomBase
+  m_Name: Room0000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5087302875555243801}
-  m_Mesh: {fileID: 4009482027626121304, guid: 7c88f9cd36f402d4faeb5d9e623f940d, type: 3}
+  m_Mesh: {fileID: 5551418225153903260, guid: 4597a1bd3442ee94ca31d6867f5dcd87, type: 3}
 --- !u!23 &6744500475353401036
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -58,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3493228323116765067, guid: 7c88f9cd36f402d4faeb5d9e623f940d, type: 3}
+  - {fileID: 2100000, guid: b19dcd8893536284abf7cef17a65a75b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,3 +80,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &6573481140209198672
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5087302875555243801}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5551418225153903260, guid: 4597a1bd3442ee94ca31d6867f5dcd87, type: 3}
