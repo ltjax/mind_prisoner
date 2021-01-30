@@ -12,6 +12,8 @@ public class UnitController : MonoBehaviour {
     private CharacterController MyBody;
     private ProjectileManager projectileManager;
 
+    public PlayerHealthBar healthBar;
+
     private Grid MyGrid;
     public Vector3Int MyGridPos;
     private RoomManager RoomManager;
@@ -34,6 +36,7 @@ public class UnitController : MonoBehaviour {
         MainCam = Camera.main;
         MyBody = GetComponent<CharacterController>();
         RoomManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<RoomManager>();
+        healthBar.SetHealth(10);
 
         StartCoroutine(AnimationControl());
     }
