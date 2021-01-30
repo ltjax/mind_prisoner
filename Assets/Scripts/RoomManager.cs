@@ -7,6 +7,7 @@ public class ConfiguredRoom
 {
     public ConfiguredRoom(Transform room)
     {
+        this.room = room;
         doorElement = new Transform[4];
     }
 
@@ -101,7 +102,10 @@ public class RoomManager : MonoBehaviour
 
         //Debug.Log(visited);
 
-        var deletedRooms = active.Where(x => !visited.Contains(x.Key));
+        var deletedRooms = active
+            .Where(x => !visited.Contains(x.Key))
+            .ToList();
+
         foreach (var toDespawn in deletedRooms)
         {
             GameObject.Destroy(toDespawn.Value.room.gameObject);
@@ -111,9 +115,11 @@ public class RoomManager : MonoBehaviour
                 {
                     continue;
                 }
-                GameObject.Destroy(element);
+                GameObject.Destroy(element.gameObject);
             }
+            active.Remove(toDespawn.Key);
         }
+        
         UpdateTransitions(deletedRooms.Select(x => x.Key));
     }
 
@@ -149,20 +155,19 @@ public class RoomManager : MonoBehaviour
             for (int i = 0; i < 4; ++i)
             {
                 bool hasNeighbor = active.ContainsKey(each.Key + NEIGHBORS[i]);
-                //bool hadNeighborBefore = each.Value.doorElement[i] != null;
-                //if (hadNeighborBefore == hasNeighbor)
-                //    continue;
+                bool hadNeighborBefore = each.Value.doorElement[i] == null;
+                if (hadNeighborBefore == hasNeighbor)
+                    continue;
 
                 if (hasNeighbor)
                 {
-                    //GameObject.Destroy(each.Value.doorElement[i].gameObject);
+                    GameObject.Destroy(each.Value.doorElement[i].gameObject);
                 }
                 else
                 {
                     var instance = Instantiate(blockList[i]);
                     var position = grid.CellToLocal(new Vector3Int(cell.x, cell.y, 0));
                     instance.position = position;
-                    //instance.rotation = Quaternion.AngleAxis(-90.0f, new Vector3(1.0f, 0.0f, 0.0f));
                     instance.name = string.Format("Block ({0},{1}) d{2} / #{3}", cell.x, cell.y, i, elementId++);
                     each.Value.doorElement[i] = instance;
                 }
