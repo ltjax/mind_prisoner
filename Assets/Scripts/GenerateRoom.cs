@@ -41,6 +41,10 @@ public class GenerateRoom : MonoBehaviour
     {
         Debug.Assert(room != null);
 
+        if(Debug.isDebugBuild) {
+            Random.InitState(1234567);
+        }
+
         Vector2 roomSize = ROOM_SIZE;
 
         AddRoom(new Vector2Int(0, 0));
