@@ -46,6 +46,7 @@ public class ProjectileController : MonoBehaviour
         trailParticles.Stop();
         isHarmless = true;
         GetComponent<SphereCollider>().enabled = false;
+        GetComponentInChildren<Light>().enabled = false;
     }
 
     public bool ReadyToGo()
@@ -67,5 +68,6 @@ public class ProjectileController : MonoBehaviour
         emission.enabled = true;
         isHarmless = false;
         GetComponent<SphereCollider>().enabled = true;
+        GetComponentInChildren<Light>().enabled = true;
     }
 }
