@@ -9,11 +9,13 @@ public class UnitController : MonoBehaviour {
     public float CruisingSpeed;
     private SpriteRenderer MySprite;
     private Animator MyAnimator;
-    private Rigidbody MyBody;
+    private CharacterController MyBody;
 
     public Grid MyGrid;
     public Vector3Int MyGridPos;
     private GenerateRoom RoomManager;
+
+    private Vector2 LastInput = Vector2.zero;
 
     private List<(KeyCode key, Vector2Int offset)> DirectionTable = new List<(KeyCode key, Vector2Int offset)> {
                 (KeyCode.LeftArrow, Vector2Int.left   ),
@@ -29,7 +31,7 @@ public class UnitController : MonoBehaviour {
         MySprite = GetComponent<SpriteRenderer>();
         MyAnimator = GetComponent<Animator>();
         MainCam = Camera.main;
-        MyBody = GetComponent<Rigidbody>();
+        MyBody = GetComponent<CharacterController>();
         RoomManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<GenerateRoom>();
 
         StartCoroutine(AnimationControl());
@@ -46,20 +48,9 @@ public class UnitController : MonoBehaviour {
             }
             return;
         } else {
-            Vector2 InputMove = Vector2.zero;
-            foreach(var (key, offset) in DirectionTable) {
-                if(Input.GetKey(key)) {
-                    InputMove += offset;
-                }
-            }
-
-            InputMove = new Vector2(InputMove.x * Mathf.Clamp01(1 - MyBody.velocity.x / CruisingSpeed),
-                                    InputMove.y * Mathf.Clamp01(1 - MyBody.velocity.y / CruisingSpeed));
-            if(InputMove.magnitude > NEGLIGIBLE) {
-                MyBody.AddForce(InputMove);
-            } else if(MyBody.velocity.magnitude > NEGLIGIBLE) {
-                // Counter-force to stop immediately
-                MyBody.AddForce(-MyBody.velocity * MyBody.mass / Time.fixedDeltaTime);
+            Vector2 InputMove = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * CruisingSpeed;
+            if(InputMove.sqrMagnitude > NEGLIGIBLE) {
+                MyBody.Move(InputMove * Time.deltaTime);
             }
         }
 
