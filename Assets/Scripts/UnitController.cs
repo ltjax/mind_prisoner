@@ -39,8 +39,11 @@ public class UnitController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        MainCam.SendMessage("JumpTo", (Vector2)transform.position);
-        MyGridPos = MyGrid.WorldToCell(transform.position);
+        Vector3Int newGridPos = MyGrid.WorldToCell(transform.position);
+        if(newGridPos != MyGridPos) {
+            MyGridPos = newGridPos;
+            MainCam.SendMessage(nameof(CameraController.MoveToCell), (Vector2Int)MyGridPos);
+        }
     }
 
 }

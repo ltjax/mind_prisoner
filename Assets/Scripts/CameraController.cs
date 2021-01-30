@@ -10,10 +10,10 @@ public class CameraController : MonoBehaviour
 
     private IEnumerable<(Vector2Int, KeyCode)> OFFSET_AND_KEYCODE = new (Vector2Int, KeyCode)[]
     {
-            (new Vector2Int(-1, 0), KeyCode.LeftArrow),
-            (new Vector2Int(1, 0), KeyCode.RightArrow),
-            (new Vector2Int(0, -1), KeyCode.DownArrow),
-            (new Vector2Int(0, 1), KeyCode.UpArrow)
+            (new Vector2Int(-1, 0), KeyCode.A),
+            (new Vector2Int(1, 0), KeyCode.D),
+            (new Vector2Int(0, -1), KeyCode.S),
+            (new Vector2Int(0, 1), KeyCode.W)
     };
 
     public Grid grid;
@@ -84,7 +84,7 @@ public class CameraController : MonoBehaviour
     }
 
 
-    void MoveToCell(Vector2Int cell)
+    public void MoveToCell(Vector2Int cell)
     {
         var center = grid.CellToWorld(new Vector3Int(cell.x, cell.y, 0)) + grid.cellSize * 0.5f;
         target = center;
