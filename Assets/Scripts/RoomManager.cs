@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ConfiguredRoom
 {
@@ -44,6 +45,7 @@ public class RoomManager : MonoBehaviour
     public Transform blockE;
     public Transform blockS;
     public Transform finish;
+    public GameObject ui;
     private Grid grid;
     private Grid enemyGrid;
 
@@ -114,6 +116,7 @@ public class RoomManager : MonoBehaviour
         {
             var (cell, direction) = info.Value;
             ClosePathInDirection(cell, direction);
+            ui.SendMessage("LetGo");
         }
     }
 
