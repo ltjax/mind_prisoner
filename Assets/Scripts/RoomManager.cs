@@ -38,6 +38,13 @@ public class RoomManager : MonoBehaviour
         Freed,
     }
 
+    public enum DeletionState
+    {
+        NotEmpty,
+        NothingThere,
+        Done,
+    }
+
     // This must be LURD order
     private static readonly Vector2Int[] NEIGHBORS = new Vector2Int[]
     {
@@ -127,26 +134,33 @@ public class RoomManager : MonoBehaviour
         if (info.HasValue)
         {
             var (cell, direction) = info.Value;
-            if (ClosePathInDirection(cell, direction))
+            switch (ClosePathInDirection(cell, direction))
             {
-                ui.SendMessage("LetGo");
-            }
-            else
-            {
-                ui.SendMessage("StillThingsToDo");
+                case DeletionState.Done:
+                    ui.SendMessage("LetGo");
+                    break;
+                case DeletionState.NotEmpty:
+                    ui.SendMessage("StillThingsToDo");
+                    break;
+                case DeletionState.NothingThere:
+                    ui.SendMessage("NothingThere");
+                    break;
             }
         }
     }
 
-    public bool ClosePathInDirection(Vector2Int currentCell, Direction direction)
+    public DeletionState ClosePathInDirection(Vector2Int currentCell, Direction direction)
     {
         var deleted = FindCellsToDelete(currentCell + NEIGHBORS[(int)direction], currentCell);
 
         foreach (var cell in deleted)
         {
             if (HasEnemies(active[cell]))
-                return false;
+                return DeletionState.NotEmpty;
         }
+
+        if (!deleted.Any())
+            return DeletionState.NothingThere;
 
         DestroyRoomsAt(deleted);
 
@@ -174,7 +188,7 @@ public class RoomManager : MonoBehaviour
         }
 
         UpdateTransitions(deleted.Concat(created));
-        return true;
+        return DeletionState.Done;
     }
 
 

@@ -36,6 +36,7 @@ public class UnitController : MonoBehaviour {
     private bool FreeCameraMode = false;
     private const KeyCode FreeCameraToggle = KeyCode.LeftShift;
     private Vector2Int CameraCellPos;
+    private float actionTimeout = 0.0f;
 
     // Start is called before the first frame update
     void Start() {
@@ -55,6 +56,8 @@ public class UnitController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        actionTimeout = Mathf.Max(0.0f, actionTimeout - Time.deltaTime);
+
         UpdateRoomState((Vector2Int)MyGridPos);
 
         if (Input.GetKeyDown(FreeCameraToggle)) {
@@ -152,7 +155,11 @@ public class UnitController : MonoBehaviour {
 
     void ClosePath()
     {
+        if (actionTimeout > 0.0f)
+            return;
+
         RoomManager.ClosePathAt(transform.position);
+        actionTimeout = 2.0f;
     }
 
     void PointCameraAtMe() {

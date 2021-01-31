@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
     Text hint;
     List<Image> minimapPanel = new List<Image>();
     RoomManager roomManager;
+    Coroutine currentText;
 
     // Start is called before the first frame update
     void Start()
@@ -38,8 +39,12 @@ public class UIController : MonoBehaviour
 
     void ShowText(string text)
     {
-        StartCoroutine(TextAnimation(text));
+        if (currentText != null)
+        {
+            StopCoroutine(currentText);
+        }
 
+        currentText = StartCoroutine(TextAnimation(text));
     }
 
     IEnumerator TextAnimation(string text)
@@ -80,7 +85,23 @@ public class UIController : MonoBehaviour
             case 2:
                 ShowText("I'm not ready to let go yet...");
                 break;
+        }
+    }
 
+    public void NothingThere()
+    {
+        switch (Random.Range(0, 3))
+        {
+            default:
+            case 0:
+                ShowText("Does not look like anything to me.");
+                break;
+            case 1:
+                ShowText("There's nothing there.");
+                break;
+            case 2:
+                ShowText("What..?!");
+                break;
         }
     }
 
