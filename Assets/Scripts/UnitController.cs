@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UnitController : MonoBehaviour {
 
@@ -159,11 +160,7 @@ public class UnitController : MonoBehaviour {
         Debug.Assert(Amount > 0);
         healthBar.SetHealth(Mathf.Max(0, healthBar.CurrentHealth - Amount));
         if(healthBar.CurrentHealth < 1) {
-            SendMessage("GameOver");
+            SceneManager.LoadScene("GameOver");
         }
-    }
-
-    void GameOver() {
-        // TODO
     }
 }

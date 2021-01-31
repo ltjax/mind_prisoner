@@ -256,7 +256,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Congratulations!
+  m_Text: You lost...
 --- !u!222 &274077354
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -275,6 +275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 622041020}
   - component: {fileID: 622041019}
+  - component: {fileID: 622041021}
   m_Layer: 0
   m_Name: Jingle
   m_TagString: Untagged
@@ -292,7 +293,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 22b9ffe8f2e5eb04eb09f493c2d130e9, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 044bacb4ae35ae9489b60a3d16c4cf20, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -392,6 +393,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &622041021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622041018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 774bd4b179a98b8488c56924182350c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &774305452
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +557,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You found yourself and put your mind at ease!
+  m_Text: Press SPACE to try finding yourself again
 --- !u!222 &945122839
 CanvasRenderer:
   m_ObjectHideFlags: 0
