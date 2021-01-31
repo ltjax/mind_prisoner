@@ -8,14 +8,6 @@ public class CameraController : MonoBehaviour
     private const float ROOM_HEIGHT = 3.0f;
     private const float MOVE_SPEED = 10.0f;
 
-    private IEnumerable<(Vector2Int, KeyCode)> OFFSET_AND_KEYCODE = new (Vector2Int, KeyCode)[]
-    {
-            (new Vector2Int(-1, 0), KeyCode.A),
-            (new Vector2Int(1, 0), KeyCode.D),
-            (new Vector2Int(0, -1), KeyCode.S),
-            (new Vector2Int(0, 1), KeyCode.W)
-    };
-
     private Grid grid;
     private Vector2? target;
 
@@ -58,37 +50,21 @@ public class CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        foreach (var (offset, keycode) in OFFSET_AND_KEYCODE)
-        {
-            if (Input.GetKeyDown(keycode))
-            {
-                var current = grid.LocalToCell(transform.position);
-                MoveToCell((Vector2Int)current + offset);
-                break;
-            }
-        }
+     
     }
 
     private (Vector2, bool) SmoothMoveTo(Vector2 target)
     {
-        var current = (Vector2)transform.position;
-        var difference = target - current;
-        var l = difference.magnitude;
-        var speed = Time.deltaTime * MOVE_SPEED;
-        if (l > speed)
-        {
-            difference *= speed / l;
-            return (difference, false);
-        }
-
-        return (difference, true);
+        var difference = Vector2.Lerp(transform.position, target, Time.deltaTime * 6) - (Vector2)transform.position;
+        return (difference, difference.magnitude < 0.001f);
     }
-
 
     public void MoveToCell(Vector2Int cell)
     {
-        var center = grid.CellToWorld(new Vector3Int(cell.x, cell.y, 0)) + grid.cellSize * 0.5f;
-        target = center;
+        if(grid != null) {
+            var center = grid.CellToWorld(new Vector3Int(cell.x, cell.y, 0)) + grid.cellSize * 0.5f;
+            target = center;
+        }
     }
 
     void JumpTo(Vector2 TargetPos) {

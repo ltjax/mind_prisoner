@@ -129,6 +129,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f7c172608c8e9b844b28ea5527a2ef28, type: 3}
   - {fileID: 8300000, guid: 2fc02d9a5b593da47b8f9ba937c64d91, type: 3}
   ExplodeSound: {fileID: 0}
+  FreeCamStart: {fileID: 8300000, guid: c0049d4ae4597e245b9eebe1cb1b0820, type: 3}
+  FreeCamStop: {fileID: 8300000, guid: f199bd4d92ce66944a4cdb46f974e5d2, type: 3}
+  RoomDelete: {fileID: 8300000, guid: 97fa6280afdc00f40aa32bdf5f0be8d1, type: 3}
+  CantDo:
+  - {fileID: 8300000, guid: 859becb3e454dcc4fa1a2eda9d4ee7bb, type: 3}
+  - {fileID: 8300000, guid: cca632a8d4c6e3448ac2898e78b81929, type: 3}
 --- !u!212 &4976632324547077184
 SpriteRenderer:
   m_ObjectHideFlags: 0

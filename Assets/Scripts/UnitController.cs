@@ -22,10 +22,18 @@ public class UnitController : MonoBehaviour {
                 (KeyCode.LeftArrow, Vector2Int.left   ),
                 (KeyCode.RightArrow, Vector2Int.right ),
                 (KeyCode.UpArrow, Vector2Int.up       ),
-                (KeyCode.DownArrow, Vector2Int.down   )
+                (KeyCode.DownArrow, Vector2Int.down   ),
+                (KeyCode.A, Vector2Int.left   ),
+                (KeyCode.D, Vector2Int.right ),
+                (KeyCode.W, Vector2Int.up       ),
+                (KeyCode.S, Vector2Int.down   )
             };
 
     private Camera MainCam;
+
+    private bool FreeCameraMode = false;
+    private const KeyCode FreeCameraToggle = KeyCode.LeftShift;
+    private Vector2Int CameraCellPos;
 
     // Start is called before the first frame update
     void Start() {
@@ -34,6 +42,7 @@ public class UnitController : MonoBehaviour {
         MyGrid = GameObject.FindGameObjectWithTag("GridGlobal")?.GetComponent<Grid>();
         projectileManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<ProjectileManager>();
         MainCam = Camera.main;
+        PointCameraAtMe();
         MyBody = GetComponent<CharacterController>();
         RoomManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<RoomManager>();
         healthBar.SetHealth(10);
@@ -42,32 +51,55 @@ public class UnitController : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        
+        if(Input.GetKeyDown(FreeCameraToggle)) {
+            SendMessage("StartFreeCam");
+        } else if(Input.GetKeyUp(FreeCameraToggle)) {
+            SendMessage("StopFreeCam");
+        }
 
-        if(Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) {
+        if(FreeCameraMode) {
+            var newCamPos = CameraCellPos;
             foreach(var (key, offset) in DirectionTable) {
                 if(Input.GetKeyDown(key)) {
-                    RoomManager.RemoveRoom((Vector2Int)MyGridPos + offset, (Vector2Int)MyGridPos);
-                    break;
+                    newCamPos += offset;
                 }
             }
-            return;
+            if(!RoomManager.TryGetRoomAt(newCamPos, out Transform r)) {
+                SendMessage("PlayCantDo");
+            } else {
+                CameraCellPos = newCamPos;
+                MainCam.SendMessage("MoveToCell", CameraCellPos);
+            }
+
+            if(Input.GetKeyUp(KeyCode.Delete)) {
+                if(CameraCellPos == (Vector2Int)MyGridPos) {
+                    SendMessage("PlayCantDo");
+                } else {
+                    RoomManager.RemoveRoom(CameraCellPos, (Vector2Int)MyGridPos);
+                    SendMessage("DeleteRoom");
+                    PointCameraAtMe();
+                }
+            }
         } else {
             Vector2 InputMove = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * CruisingSpeed;
             if(InputMove.magnitude > NEGLIGIBLE) {
                 MyBody.Move(InputMove * Time.deltaTime);
             }
+
             if(Input.GetMouseButtonDown(0)) {
                 SendMessage("Fire");
             }
+
             if(Input.GetMouseButtonDown(1)) {
                 SendMessage(nameof(ClosePath));
             }
-        }
 
-        Vector3Int newGridPos = MyGrid.WorldToCell(transform.position);
-        if(newGridPos != MyGridPos) {
-            MyGridPos = newGridPos;
-            MainCam.SendMessage(nameof(CameraController.MoveToCell), (Vector2Int)MyGridPos);
+            Vector3Int newGridPos = MyGrid.WorldToCell(transform.position);
+            if(newGridPos != MyGridPos) {
+                MyGridPos = newGridPos;
+                MainCam.SendMessage(nameof(CameraController.MoveToCell), (Vector2Int)MyGridPos);
+            }
         }
     }
 
@@ -107,5 +139,19 @@ public class UnitController : MonoBehaviour {
     void ClosePath()
     {
         RoomManager.ClosePathAt(transform.position);
+    }
+
+    void PointCameraAtMe() {
+        CameraCellPos = (Vector2Int)MyGridPos;
+        MainCam.SendMessage("MoveToCell", CameraCellPos);
+    }
+
+    void StartFreeCam() {
+        FreeCameraMode = true;
+    }
+
+    void StopFreeCam() {
+        FreeCameraMode = false;
+        PointCameraAtMe();
     }
 }

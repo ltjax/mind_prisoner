@@ -8,6 +8,8 @@ public class UnitAudio : MonoBehaviour {
     public float Volume;
     public AudioClip[] StepCycle, FireSounds;
     public AudioClip ExplodeSound;
+    public AudioClip FreeCamStart, FreeCamStop, RoomDelete;
+    public AudioClip[] CantDo;
     private GameObject mySpeaker;
     private List<AudioSource> Sources;
     private int currentStep = 0;
@@ -75,5 +77,25 @@ public class UnitAudio : MonoBehaviour {
     private void Explode() {
         Debug.Assert(ExplodeSound != null);
         PlayClip(ExplodeSound);
+    }
+
+    private void StartFreeCam() {
+        Debug.Assert(FreeCamStart != null);
+        PlayClip(FreeCamStart);
+    }
+
+    private void StopFreeCam() {
+        Debug.Assert(FreeCamStop != null);
+        PlayClip(FreeCamStop);
+    }
+
+    private void DeleteRoom() {
+        Debug.Assert(RoomDelete != null);
+        PlayClip(RoomDelete);
+    }
+
+    private void PlayCantDo() {
+        Debug.Assert(CantDo.Length > 0);
+        PlayClip(CantDo[Random.Range(0, CantDo.Length)]);
     }
 }

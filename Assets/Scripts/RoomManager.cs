@@ -314,4 +314,13 @@ public class RoomManager : MonoBehaviour
                            roomTransform.position.y + (Random.value - 0.5f) * roomBounds.size.y,
                            -0.5f);
     }
+
+    public bool TryGetRoomAt(Vector2Int GridCoord, out Transform Room) {
+        if(active.ContainsKey(GridCoord)) {
+            Room = active[GridCoord].room;
+            return true;
+        }
+        Room = null;
+        return false;
+    }
 }
