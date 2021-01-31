@@ -129,19 +129,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1b6bbfa6952f44eb06d7eabc4b5ada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 0
+  EnemyType: 2
   Speed: 0.5
   InitSpeed: 0.5
-  HitPoints: 1
-  MaxHitPoints: 1
+  HitPoints: 7
+  MaxHitPoints: 7
   BigExplode: {fileID: 8828473464046609672, guid: e8e9ebd7596e7ff418ee23ac58067158,
     type: 3}
   MyState: 0
   AttackDistance: 1
   AttackReach: 1.5
   AttackDelay: 2
-  AttackCooldown: 3
-  AttackStrength: 1
+  AttackCooldown: 1
+  AttackStrength: 5
 --- !u!114 &6402346119162473597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +330,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e280cc15dbcaeae4eae77837bac27156, type: 2}
+  - {fileID: 2100000, guid: 55cdce1eee088f247a778066031633e8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -576,7 +576,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e9272ce5a7a89e14bac8438eead83af2,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Variant
+      value: Enemy Boss
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e9272ce5a7a89e14bac8438eead83af2,
         type: 3}

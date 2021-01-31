@@ -47,7 +47,10 @@ public class RoomManager : MonoBehaviour
     };
 
     public Transform room;
-    public Transform enemy;
+    public EnemyController[] enemy;
+    private int[] defeatedCount;
+    private int EnemyLevel = 0, NextLevelThreshold = 10;
+
     public Transform blockW;
     public Transform blockN;
     public Transform blockE;
@@ -331,6 +334,9 @@ public class RoomManager : MonoBehaviour
         Debug.Assert(finish != null);
         Debug.Assert(BlockList.All(x => x != null));
 
+        Debug.Assert(enemy.Length > 0);
+        defeatedCount = new int[enemy.Length];
+
         CreateRoom(new Vector2Int(0, 0));
 
         for (int i = 0; i < 10; ++i)
@@ -349,11 +355,13 @@ public class RoomManager : MonoBehaviour
         var enemyCount = Random.Range(2, 6);
         for (int i = 0; i < enemyCount; i++)
         {
-            var nEnemy = Instantiate(enemy, GetRandomLocalEnemyPosition(room.room), Quaternion.identity, room.room);
-            nEnemy.name = "Enemy Blob [" + Random.Range(10000, 100000) + "]";
+            var nType = Random.Range(0, EnemyLevel + 1);
+            var nEnemy = Instantiate(enemy[nType], GetRandomLocalEnemyPosition(room.room), Quaternion.identity, room.room);
+            nEnemy.name = "Enemy Type " + nType + " [" + Random.Range(10000, 100000) + "]";
             var nEnemyControl = nEnemy.GetComponent<EnemyController>();
             nEnemyControl.Speed = nEnemyControl.InitSpeed = Random.Range(0.2f, 1f);
-            nEnemyControl.HitPoints = nEnemyControl.MaxHitPoints = Random.Range(3, 7);
+            nEnemyControl.EnemyType = nType;
+            //nEnemyControl.HitPoints = nEnemyControl.MaxHitPoints = Random.Range(3, 7);
         }
     }
 
@@ -400,6 +408,14 @@ public class RoomManager : MonoBehaviour
     private void Update() {
         if(Input.GetKeyUp(KeyCode.Escape)) {
             Application.Quit();
+        }
+    }
+
+    void EnemyDied(EnemyController e) {
+        var type = e.EnemyType;
+        defeatedCount[type] += 1;
+        if(type == EnemyLevel && defeatedCount[type] >= NextLevelThreshold) {
+            EnemyLevel += 1;
         }
     }
 }

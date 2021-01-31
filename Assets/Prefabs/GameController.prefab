@@ -45,12 +45,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   room: {fileID: 5607662882725264803, guid: 13b4514061ec2334a854877886a449e7, type: 3}
-  enemy: {fileID: 4003680734500456702, guid: 0f0f94384340c3441b334d5da8b94187, type: 3}
+  enemy:
+  - {fileID: 1133735717, guid: 0f0f94384340c3441b334d5da8b94187, type: 3}
+  - {fileID: 1133735717, guid: b7ceb92fbddf42642884aab38715aab0, type: 3}
+  - {fileID: 1133735717, guid: c42746e6ce5ada1439f8a1ffe20ce06d, type: 3}
   blockW: {fileID: 822294917807268646, guid: b3751ae4555e5e547b151cb03074ff6f, type: 3}
   blockN: {fileID: 900287952751922053, guid: 68e1cfa7923ecf64aa5bf5171dbc490f, type: 3}
   blockE: {fileID: 4147088106402963143, guid: 2ecf54c650c7a294baecbdf711494fbc, type: 3}
   blockS: {fileID: 5743565699989848565, guid: 67fcc69329fa7b648aa084664cd847d4, type: 3}
-  grid: {fileID: 0}
+  finish: {fileID: 8044674306783877339, guid: 3ad90e007e10f5940ae63caca90766d9, type: 3}
+  ui: {fileID: 0}
 --- !u!114 &1376987709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,4 +68,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 1448503793659803473, guid: 1a52f5a58d98a3c43b963f9b6f7159df,
+    type: 3}
+  hitEffect: {fileID: 8828473464046609672, guid: e8e9ebd7596e7ff418ee23ac58067158,
     type: 3}

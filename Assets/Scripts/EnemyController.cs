@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public int EnemyType = 0;
+
     [Range(0, 3)]
     public float Speed, InitSpeed;
     Vector2 CurrentTarget;
@@ -103,8 +105,9 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator PlayDead() {
         Speed = 0;
-        yield return new WaitForSeconds(0.5f);
         MyState = EnemyState.Dead;
+        GameObject.FindGameObjectWithTag("GameController").SendMessage("EnemyDied", this);
+        yield return new WaitForSeconds(0.5f);
         gameObject.SetActive(false);
     }
 
