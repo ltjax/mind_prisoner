@@ -11,13 +11,28 @@ public class EnemyController : MonoBehaviour
     Grid MyGrid;
     UnitController Player;
     HealthBar MyHealthBar;
+    Animator MyAnimator;
 
     public int HitPoints = 5, MaxHitPoints = 5;
     bool IsDead => HitPoints < 1;
-    float calmness => Mathf.Lerp(0.2f, 1f, (float)HitPoints / MaxHitPoints);
+    float Calmness => Mathf.Lerp(0.2f, 1f, (float)HitPoints / MaxHitPoints);
+    float DistToPlayer => Vector3.Distance(Player.GetComponent<CharacterController>().bounds.center, MyBody.bounds.center);
 
     Vector2 RandomLocalTarget => (Vector2)transform.position + Random.insideUnitCircle * Speed;
     public Vector3Int MyGridPos => MyGrid.WorldToCell(transform.position);
+
+    public ParticleSystem BigExplode;
+
+    public enum EnemyState {
+        Wandering,
+        Attacking,
+        Dead
+    }
+    public EnemyState MyState = EnemyState.Wandering;
+
+    public float AttackDistance = 1f, AttackReach = 1.5f, AttackDelay = 2f, AttackCooldown = 2f;
+    [Range(0, 10)]
+    public int AttackStrength = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -29,19 +44,25 @@ public class EnemyController : MonoBehaviour
         MyHealthBar = GetComponentInChildren<HealthBar>();
         MyHealthBar.SetMaxHealth(MaxHitPoints);
         GetComponentInChildren<SkinnedMeshRenderer>().transform.rotation = Random.rotation;
+        MyAnimator = GetComponentInChildren<Animator>();
     }
 
     void FixedUpdate()
     {
-        if(IsDead) {
+        if(IsDead || MyState == EnemyState.Attacking) {
             return;
         } else {
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * calmness / 2, Time.fixedDeltaTime);
-            Speed = Mathf.Lerp(Speed, Mathf.Lerp(3f, InitSpeed, calmness), Time.fixedDeltaTime);
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * Calmness / 2, Time.fixedDeltaTime);
+            Speed = Mathf.Lerp(Speed, Mathf.Lerp(3f, InitSpeed, Calmness), Time.fixedDeltaTime);
         }
 
         if(Player.MyGridPos == MyGridPos && Vector3.Distance(Player.transform.position, transform.position) < Speed * 2) {
             CurrentTarget = Player.transform.position + Vector3.up / 2;
+
+            if(DistToPlayer < AttackDistance) {
+                MyState = EnemyState.Attacking;
+                StartCoroutine(PlayAttack());
+            }
         }
 
         Vector2 targetDir = CurrentTarget - (Vector2)transform.position;
@@ -83,6 +104,30 @@ public class EnemyController : MonoBehaviour
     IEnumerator PlayDead() {
         Speed = 0;
         yield return new WaitForSeconds(0.5f);
+        MyState = EnemyState.Dead;
         gameObject.SetActive(false);
+    }
+
+    IEnumerator PlayAttack() {
+        SendMessage("WarnAttackFirst");
+        var startTime = Time.timeSinceLevelLoad;
+        MyAnimator.speed = 3;
+        var warningLength = GetComponent<UnitAudio>().AttackFinalWarning.length;
+        yield return new WaitUntil(() => Time.timeSinceLevelLoad > startTime + AttackDelay /2);
+        SendMessage("WarnAttackFinal");
+        MyAnimator.speed = 6;
+        yield return new WaitUntil(() => Time.timeSinceLevelLoad > startTime + AttackDelay);
+        SendMessage("Fire");
+        MyAnimator.speed = 2;
+        yield return new WaitUntil(() => Time.timeSinceLevelLoad > startTime + AttackDelay + AttackCooldown);
+        MyAnimator.speed = 1;
+        MyState = EnemyState.Wandering;
+    }
+
+    void Fire() {
+        Instantiate(BigExplode, transform);
+        if(DistToPlayer < AttackReach) {
+            Player.SendMessage("TakeDamage", AttackStrength);
+        }
     }
 }

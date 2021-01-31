@@ -1,55 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!143 &1133735718
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4378693762118439492}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 0
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.05
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1133735717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4378693762118439492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e1b6bbfa6952f44eb06d7eabc4b5ada, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 0.5
-  InitSpeed: 0
-  HitPoints: 5
-  MaxHitPoints: 5
---- !u!114 &6402346119162473597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4378693762118439492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55ed7a2482b3a3d4995eee4a7a487d5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Volume: 0.22
-  StepCycle: []
-  FireSounds: []
-  ExplodeSound: {fileID: 8300000, guid: 4e8206980f36ad8438ff59451647371d, type: 3}
 --- !u!1 &4231250564483305012
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,6 +99,73 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!143 &1133735718
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378693762118439492}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 0
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.05
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1133735717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378693762118439492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e1b6bbfa6952f44eb06d7eabc4b5ada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0.5
+  InitSpeed: 0
+  HitPoints: 5
+  MaxHitPoints: 5
+  BigExplode: {fileID: 8828473464046609672, guid: e8e9ebd7596e7ff418ee23ac58067158,
+    type: 3}
+  MyState: 0
+  AttackDistance: 1
+  AttackReach: 1.5
+  AttackDelay: 2
+  AttackCooldown: 2
+  AttackStrength: 3
+--- !u!114 &6402346119162473597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378693762118439492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ed7a2482b3a3d4995eee4a7a487d5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Volume: 0.22
+  StepCycle: []
+  FireSounds:
+  - {fileID: 8300000, guid: 4e8206980f36ad8438ff59451647371d, type: 3}
+  DamageTaken: []
+  ExplodeSound: {fileID: 8300000, guid: 4e8206980f36ad8438ff59451647371d, type: 3}
+  AttackFirstWarning: {fileID: 8300000, guid: 7bf4098434de36349bcfa5221ca4bcab, type: 3}
+  AttackFinalWarning: {fileID: 8300000, guid: 2a08c611a1f47d048bdd6f915d657f3c, type: 3}
+  FreeCamStart: {fileID: 0}
+  FreeCamStop: {fileID: 0}
+  RoomDelete: {fileID: 0}
+  GameOverJingle: {fileID: 0}
+  CantDo: []
 --- !u!1 &4500956771683529823
 GameObject:
   m_ObjectHideFlags: 0
