@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHealthBar : MonoBehaviour
 {
-    public Sprite HeartSprite;
+    public RectTransform HeartSprite;
     private float HeartSize = 50f;
 
     public int CurrentHealth;
@@ -14,19 +14,9 @@ public class PlayerHealthBar : MonoBehaviour
     {
         CurrentHealth = health;
         RemoveHearts();
-
-        for (int i = 0; i < health; i++)
-        {
-            GameObject heartContainer = new GameObject("healthIndicator");
-            var rectTransform = heartContainer.AddComponent<RectTransform>();
-            rectTransform.transform.SetParent(transform);
-            rectTransform.sizeDelta = new Vector2(HeartSize, HeartSize);
-            rectTransform.localPosition = new Vector3(i * HeartSize, 0, 0);
-
-            Image image = heartContainer.AddComponent<Image>();
-            image.sprite = HeartSprite;
-            image.preserveAspect = true;
-            heartContainer.transform.SetParent(transform);
+        for (int i = 0; i < health; i++) {
+            var newHeart = Instantiate(HeartSprite, transform);
+            newHeart.localPosition = new Vector3(newHeart.sizeDelta.x * i, 0, 0);
         }
     }
 
