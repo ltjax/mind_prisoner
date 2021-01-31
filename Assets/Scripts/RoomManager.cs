@@ -34,7 +34,8 @@ public class RoomManager : MonoBehaviour
     {
         NonExistant,
         Unvisited,
-        Visited,
+        Hostiles,
+        Freed,
     }
 
     // This must be LURD order
@@ -126,14 +127,29 @@ public class RoomManager : MonoBehaviour
         if (info.HasValue)
         {
             var (cell, direction) = info.Value;
-            ClosePathInDirection(cell, direction);
-            ui.SendMessage("LetGo");
+            if (ClosePathInDirection(cell, direction))
+            {
+                ui.SendMessage("LetGo");
+            }
+            else
+            {
+                ui.SendMessage("StillThingsToDo");
+            }
         }
     }
 
-    public void ClosePathInDirection(Vector2Int currentCell, Direction direction)
+    public bool ClosePathInDirection(Vector2Int currentCell, Direction direction)
     {
-        var deleted = DeleteComponent(currentCell + NEIGHBORS[(int)direction], currentCell);
+        var deleted = FindCellsToDelete(currentCell + NEIGHBORS[(int)direction], currentCell);
+
+        foreach (var cell in deleted)
+        {
+            if (HasEnemies(active[cell]))
+                return false;
+        }
+
+        DestroyRoomsAt(deleted);
+
         var created = new List<Vector2Int>();
 
         foreach (var _ in deleted)
@@ -158,6 +174,7 @@ public class RoomManager : MonoBehaviour
         }
 
         UpdateTransitions(deleted.Concat(created));
+        return true;
     }
 
 
@@ -217,7 +234,7 @@ public class RoomManager : MonoBehaviour
         UpdateTransitions(deletedRooms);
     }
 
-    private IEnumerable<Vector2Int> DeleteComponent(Vector2Int toDelete, Vector2Int floodStart)
+    private IEnumerable<Vector2Int> FindCellsToDelete(Vector2Int toDelete, Vector2Int floodStart)
     {
         var visited = new HashSet<Vector2Int>();
         var todo = new List<Vector2Int> { floodStart };
@@ -239,16 +256,26 @@ public class RoomManager : MonoBehaviour
             }
         }
 
-        //Debug.Log(visited);
-
-        var deletedRooms = active
+        return active
             .Where(x => !visited.Contains(x.Key))
+            .Select(x => x.Key)
             .ToList();
+    }
 
-        foreach (var toDespawn in deletedRooms)
+    private IEnumerable<Vector2Int> DeleteComponent(Vector2Int toDelete, Vector2Int floodStart)
+    {
+        var cells = FindCellsToDelete(toDelete, floodStart);
+        DestroyRoomsAt(cells);
+        return cells;
+    }
+
+    private void DestroyRoomsAt(IEnumerable<Vector2Int> cells)
+    {
+        foreach (var toDespawn in cells)
         {
-            Destroy(toDespawn.Value.room.gameObject);
-            foreach (var element in toDespawn.Value.doorElement)
+            var entry = active[toDespawn];
+            Destroy(entry.room.gameObject);
+            foreach (var element in entry.doorElement)
             {
                 if (element == null)
                 {
@@ -256,11 +283,8 @@ public class RoomManager : MonoBehaviour
                 }
                 Destroy(element.gameObject);
             }
-            active.Remove(toDespawn.Key);
+            active.Remove(toDespawn);
         }
-
-        return deletedRooms
-            .Select(x => x.Key);
     }
 
     public ISet<Vector2Int> Hull(IEnumerable<Vector2Int> original)
@@ -384,13 +408,24 @@ public class RoomManager : MonoBehaviour
         return false;
     }
 
+    bool HasEnemies(ConfiguredRoom room)
+    {
+        var enemies = room.room.gameObject.GetComponentsInChildren<EnemyController>();
+        return enemies.Any(enemy => enemy.MyState != EnemyController.EnemyState.Dead);
+    }
+
     public RoomState CheckRoom(Vector2Int cell)
     {
         if (active.TryGetValue(cell, out ConfiguredRoom room))
         {
             if (room.visited)
             {
-                return RoomState.Visited;
+                if (HasEnemies(room))
+                {
+                    return RoomState.Hostiles;
+                }
+
+                return RoomState.Freed;
             }
             return RoomState.Unvisited;
         }

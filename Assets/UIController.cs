@@ -63,7 +63,25 @@ public class UIController : MonoBehaviour
 
     public void LetGo()
     {
-        ShowText("As I let go of my past, I feel like new paths are opening up...");
+        ShowText("As I let go of my past, I feel like new paths are opening up!");
+    }
+
+    public void StillThingsToDo()
+    {
+        switch (Random.Range(0, 3))
+        {
+            default:
+            case 0:
+                ShowText("I feel like I still have unresolved business there...");
+                break;
+            case 1:
+                ShowText("There's still something I have to do there...");
+                break;
+            case 2:
+                ShowText("I'm not ready to let go yet...");
+                break;
+
+        }
     }
 
     public void UpdateMinimap(Vector2Int center)
@@ -82,9 +100,13 @@ public class UIController : MonoBehaviour
                     case RoomManager.RoomState.NonExistant:
                         panel.enabled = false;
                         break;
-                    case RoomManager.RoomState.Visited:
+                    case RoomManager.RoomState.Freed:
                         panel.enabled = true;
                         panel.color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
+                        break;
+                    case RoomManager.RoomState.Hostiles:
+                        panel.enabled = true;
+                        panel.color = new Color(1.0f, 0.2f, 0.2f, 0.75f);
                         break;
                     case RoomManager.RoomState.Unvisited:
                         panel.enabled = true;
