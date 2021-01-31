@@ -52,7 +52,23 @@ public class UnitController : MonoBehaviour {
         uiController = GameObject.Find("/UI").GetComponent<UIController>();
         healthBar.SetHealth(10);
 
+        InvokeRepeating("Falldown", 0.0f, 0.005f);
+        SendMessage("Fall");
+
         StartCoroutine(AnimationControl());
+    }
+
+    void Falldown()
+    {
+        if (MyBody.transform.position.z < -0.5f)
+        {
+            MyBody.transform.Translate(new Vector3(0, 0, 0.5f));
+        }
+        else
+        {
+            CancelInvoke("Falldown");
+            SendMessage("Crash");
+        }
     }
 
     void FixedUpdate()
