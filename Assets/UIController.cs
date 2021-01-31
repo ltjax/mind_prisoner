@@ -116,6 +116,7 @@ public class UIController : MonoBehaviour
                 var cell = center + new Vector2Int(x - offset, y - offset);
                 var state = roomManager.CheckRoom(cell);
                 var panel = minimapPanel[index];
+                var alpha = cell == center ? 0.9f : 0.45f;
                 switch (state)
                 {
                     case RoomManager.RoomState.NonExistant:
@@ -123,11 +124,11 @@ public class UIController : MonoBehaviour
                         break;
                     case RoomManager.RoomState.Freed:
                         panel.enabled = true;
-                        panel.color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
+                        panel.color = new Color(1.0f, 1.0f, 1.0f, alpha);
                         break;
                     case RoomManager.RoomState.Hostiles:
                         panel.enabled = true;
-                        panel.color = new Color(1.0f, 0.2f, 0.2f, 0.75f);
+                        panel.color = new Color(1.0f, 0.2f, 0.2f, alpha);
                         break;
                     case RoomManager.RoomState.Unvisited:
                         panel.enabled = true;
