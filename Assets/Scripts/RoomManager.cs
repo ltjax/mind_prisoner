@@ -372,4 +372,10 @@ public class RoomManager : MonoBehaviour
     {
         return active.ContainsKey(cell);
     }
+
+    private void Update() {
+        if(Input.GetKeyUp(KeyCode.Escape)) {
+            Application.Quit();
+        }
+    }
 }

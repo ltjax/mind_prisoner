@@ -12,10 +12,15 @@ public class GameOverController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+
+        if(Input.GetKeyUp(KeyCode.Escape)) {
+            Application.Quit();
+        }
+
         if(Input.GetKeyUp(KeyCode.Space)) {
             SceneManager.LoadScene("Game");
         }
+
     }
 }
