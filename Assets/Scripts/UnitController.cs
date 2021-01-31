@@ -51,7 +51,7 @@ public class UnitController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        
+
         if(Input.GetKeyDown(FreeCameraToggle)) {
             SendMessage("StartFreeCam");
         } else if(Input.GetKeyUp(FreeCameraToggle)) {
@@ -153,5 +153,17 @@ public class UnitController : MonoBehaviour {
     void StopFreeCam() {
         FreeCameraMode = false;
         PointCameraAtMe();
+    }
+
+    void TakeDamage(int Amount) {
+        Debug.Assert(Amount > 0);
+        healthBar.SetHealth(Mathf.Max(0, healthBar.CurrentHealth - Amount));
+        if(healthBar.CurrentHealth < 1) {
+            SendMessage("GameOver");
+        }
+    }
+
+    void GameOver() {
+        // TODO
     }
 }
