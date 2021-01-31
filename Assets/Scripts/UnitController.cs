@@ -37,6 +37,7 @@ public class UnitController : MonoBehaviour {
     private const KeyCode FreeCameraToggle = KeyCode.LeftShift;
     private Vector2Int CameraCellPos;
     private float actionTimeout = 0.0f;
+    private float shootTimeout = 0.0f;
 
     // Start is called before the first frame update
     void Start() {
@@ -56,7 +57,8 @@ public class UnitController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        actionTimeout = Mathf.Max(0.0f, actionTimeout - Time.deltaTime);
+        actionTimeout = Mathf.Max(0.0f, actionTimeout - Time.fixedDeltaTime);
+        shootTimeout = Mathf.Max(0.0f, shootTimeout - Time.fixedDeltaTime);
 
         UpdateRoomState((Vector2Int)MyGridPos);
 
@@ -96,7 +98,11 @@ public class UnitController : MonoBehaviour {
             }
 
             if(Input.GetMouseButtonDown(0)) {
-                SendMessage("Fire");
+                if (shootTimeout == 0.0f)
+                {
+                    SendMessage("Fire");
+                    shootTimeout = 0.3f;
+                }
             }
 
             if(Input.GetMouseButtonDown(1)) {
@@ -137,19 +143,31 @@ public class UnitController : MonoBehaviour {
             MyAnimator.SetFloat("Velocity_Vertical", Vel.y);
         }
     }
+
+    Vector2? GetTargetPoint()
+    {
+        var ray = MainCam.ScreenPointToRay(Input.mousePosition);
+        if (ray.direction.z == 0.0f)
+            return null;
+
+        var lambda = -ray.origin.z / ray.direction.z;
+        var target = ray.origin + lambda * ray.direction;
+       
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if ((ray.origin - hit.point).sqrMagnitude < (ray.origin - target).sqrMagnitude)
+                target = hit.point;            
+        }
+        return target;
+    }
 	
     void Fire() {
-        var ray = MainCam.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit hit)) {
-            var direction = hit.point - transform.position;
-            projectileManager.Spawn(MyBody.ClosestPointOnBounds(hit.point), direction);
-        }
-        // Just intersect with z = 0
-        else if(ray.direction.z != 0.0f) {
-            var lambda = -ray.origin.z / ray.direction.z;
-            var target = ((Vector2)ray.origin) + lambda * ((Vector2)ray.direction);
-            var direction = target - (Vector2)transform.position;
-            projectileManager.Spawn(MyBody.ClosestPointOnBounds(target), direction);
+        var target = GetTargetPoint();
+        if (target.HasValue)
+        {
+            var start = (Vector2)MyBody.ClosestPointOnBounds(target.Value);
+            var direction = target.Value - start;
+            projectileManager.Spawn(MyBody.ClosestPointOnBounds(target.Value), direction);
         }
     }
 
