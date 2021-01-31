@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: Global Game Jam 2021
   productName: Mind Prisoner
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -120,11 +120,11 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   m_SupportedAspectRatios:
     4:3: 1
-    5:4: 1
-    16:10: 1
-    16:9: 1
-    Others: 1
-  bundleVersion: 0.1
+    5:4: 0
+    16:10: 0
+    16:9: 0
+    Others: 0
+  bundleVersion: 0.7
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0

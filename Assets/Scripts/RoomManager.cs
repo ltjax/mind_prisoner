@@ -364,4 +364,10 @@ public class RoomManager : MonoBehaviour
         Room = null;
         return false;
     }
+
+    private void Update() {
+        if(Input.GetKeyUp(KeyCode.Escape)) {
+            Application.Quit();
+        }
+    }
 }
