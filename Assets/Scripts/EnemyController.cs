@@ -30,7 +30,9 @@ public class EnemyController : MonoBehaviour
     }
     public EnemyState MyState = EnemyState.Wandering;
 
-    const float AttackDistance = 1f, AttackReach = 1.5f, AttackDelay = 2f, AttackCooldown = 2f;
+    public float AttackDistance = 1f, AttackReach = 1.5f, AttackDelay = 2f, AttackCooldown = 2f;
+    [Range(0, 10)]
+    public int AttackStrength = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -124,5 +126,8 @@ public class EnemyController : MonoBehaviour
 
     void Fire() {
         Instantiate(BigExplode, transform);
+        if(DistToPlayer < AttackReach) {
+            Player.SendMessage("TakeDamage", AttackStrength);
+        }
     }
 }

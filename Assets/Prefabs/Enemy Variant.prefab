@@ -136,6 +136,11 @@ MonoBehaviour:
   BigExplode: {fileID: 8828473464046609672, guid: e8e9ebd7596e7ff418ee23ac58067158,
     type: 3}
   MyState: 0
+  AttackDistance: 1
+  AttackReach: 1.5
+  AttackDelay: 2
+  AttackCooldown: 2
+  AttackStrength: 3
 --- !u!114 &6402346119162473597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,12 +157,14 @@ MonoBehaviour:
   StepCycle: []
   FireSounds:
   - {fileID: 8300000, guid: 4e8206980f36ad8438ff59451647371d, type: 3}
+  DamageTaken: []
   ExplodeSound: {fileID: 8300000, guid: 4e8206980f36ad8438ff59451647371d, type: 3}
   AttackFirstWarning: {fileID: 8300000, guid: 7bf4098434de36349bcfa5221ca4bcab, type: 3}
   AttackFinalWarning: {fileID: 8300000, guid: 2a08c611a1f47d048bdd6f915d657f3c, type: 3}
   FreeCamStart: {fileID: 0}
   FreeCamStop: {fileID: 0}
   RoomDelete: {fileID: 0}
+  GameOverJingle: {fileID: 0}
   CantDo: []
 --- !u!1 &4500956771683529823
 GameObject:

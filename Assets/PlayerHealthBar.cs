@@ -8,8 +8,11 @@ public class PlayerHealthBar : MonoBehaviour
     public Sprite HeartSprite;
     private float HeartSize = 50f;
 
+    public int CurrentHealth;
+
     public void SetHealth(int health)
     {
+        CurrentHealth = health;
         RemoveHearts();
 
         for (int i = 0; i < health; i++)
