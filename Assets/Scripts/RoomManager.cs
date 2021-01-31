@@ -15,6 +15,7 @@ public class ConfiguredRoom
     public Transform room;
     public Transform[] doorElement;
     public Transform finish;
+    public bool visited = false;
 
     public bool IsFinish => finish != null;
 }
@@ -27,6 +28,13 @@ public class RoomManager : MonoBehaviour
         Up,
         Right,
         Down
+    }
+
+    public enum RoomState
+    {
+        NonExistant,
+        Unvisited,
+        Visited,
     }
 
     // This must be LURD order
@@ -368,9 +376,25 @@ public class RoomManager : MonoBehaviour
         return false;
     }
 
-    public bool HasRoom(Vector2Int cell)
+    public RoomState CheckRoom(Vector2Int cell)
     {
-        return active.ContainsKey(cell);
+        if (active.TryGetValue(cell, out ConfiguredRoom room))
+        {
+            if (room.visited)
+            {
+                return RoomState.Visited;
+            }
+            return RoomState.Unvisited;
+        }
+        return RoomState.NonExistant;
+    }
+
+    public void Visit(Vector2Int cell)
+    {
+        if (active.TryGetValue(cell, out ConfiguredRoom room))
+        {
+            room.visited = true;
+        }
     }
 
     private void Update() {

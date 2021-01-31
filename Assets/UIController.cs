@@ -75,7 +75,22 @@ public class UIController : MonoBehaviour
             {
                 var index = y * MINIMAP_SIZE + x;
                 var cell = center + new Vector2Int(x - offset, y - offset);
-                minimapPanel[index].enabled = roomManager.HasRoom(cell);
+                var state = roomManager.CheckRoom(cell);
+                var panel = minimapPanel[index];
+                switch (state)
+                {
+                    case RoomManager.RoomState.NonExistant:
+                        panel.enabled = false;
+                        break;
+                    case RoomManager.RoomState.Visited:
+                        panel.enabled = true;
+                        panel.color = new Color(1.0f, 1.0f, 1.0f, 0.75f);
+                        break;
+                    case RoomManager.RoomState.Unvisited:
+                        panel.enabled = true;
+                        panel.color = new Color(1.0f, 1.0f, 0.8f, 0.2f);
+                        break;
+                }
             }
         }
     }

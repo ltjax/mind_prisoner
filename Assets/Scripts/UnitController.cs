@@ -53,9 +53,11 @@ public class UnitController : MonoBehaviour {
         StartCoroutine(AnimationControl());
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
+        UpdateRoomState((Vector2Int)MyGridPos);
 
-        if(Input.GetKeyDown(FreeCameraToggle)) {
+        if (Input.GetKeyDown(FreeCameraToggle)) {
             SendMessage("StartFreeCam");
         } else if(Input.GetKeyUp(FreeCameraToggle)) {
             SendMessage("StopFreeCam");
@@ -99,12 +101,20 @@ public class UnitController : MonoBehaviour {
             }
 
             Vector3Int newGridPos = MyGrid.WorldToCell(transform.position);
-            if(newGridPos != MyGridPos) {
+            if(newGridPos != MyGridPos)
+            {
                 MyGridPos = newGridPos;
-                MainCam.SendMessage(nameof(CameraController.MoveToCell), (Vector2Int)MyGridPos);
-                uiController.UpdateMinimap((Vector2Int)MyGridPos);
+                var cell = (Vector2Int)MyGridPos;
+                MainCam.SendMessage(nameof(CameraController.MoveToCell), cell);
+                UpdateRoomState(cell);
             }
         }
+    }
+
+    private void UpdateRoomState(Vector2Int cell)
+    {
+        RoomManager.Visit(cell);
+        uiController.UpdateMinimap(cell);
     }
 
     private IEnumerator AnimationControl() {
