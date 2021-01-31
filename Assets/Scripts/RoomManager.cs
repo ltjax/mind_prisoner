@@ -458,6 +458,10 @@ public class RoomManager : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Escape)) {
             Application.Quit();
         }
+
+        if(Input.GetKeyUp(KeyCode.P)) {
+            Camera.main.SendMessage("TakeScreenshot");
+        }
     }
 
     void EnemyDied(EnemyController e) {

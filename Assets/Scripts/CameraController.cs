@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -81,5 +82,18 @@ public class CameraController : MonoBehaviour
 
     void JumpTo(Vector2 TargetPos) {
         transform.position = new Vector3(TargetPos.x, TargetPos.y, transform.position.z);
+    }
+
+    // Stores a screenshot to My Pictures
+    void TakeScreenshot() {
+        // Create directory if necessary
+        string targetDir = String.Format("{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), Application.productName);
+        if(!Directory.Exists(targetDir)) {
+            Directory.CreateDirectory(targetDir);
+        }
+        // Take and store the screenshot
+        string filepath = String.Format("{0}\\screenshot_{1:yyyyMMddHHmmssfff}.png", targetDir, System.DateTime.Now);
+        ScreenCapture.CaptureScreenshot(filepath);
+        Debug.LogFormat("Screenshot saved to {0}.", filepath);
     }
 }
