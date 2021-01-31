@@ -164,7 +164,6 @@ MonoBehaviour:
   FreeCamStart: {fileID: 0}
   FreeCamStop: {fileID: 0}
   RoomDelete: {fileID: 0}
-  GameOverJingle: {fileID: 0}
   CantDo: []
 --- !u!1 &4500956771683529823
 GameObject:

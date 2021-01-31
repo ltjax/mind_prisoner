@@ -8,7 +8,7 @@ public class UnitAudio : MonoBehaviour {
     public float Volume;
     public AudioClip[] StepCycle, FireSounds, DamageTaken;
     public AudioClip ExplodeSound, AttackFirstWarning, AttackFinalWarning;
-    public AudioClip FreeCamStart, FreeCamStop, RoomDelete, GameOverJingle;
+    public AudioClip FreeCamStart, FreeCamStop, RoomDelete;
     public AudioClip[] CantDo;
     private GameObject mySpeaker;
     private List<AudioSource> Sources;
@@ -112,10 +112,5 @@ public class UnitAudio : MonoBehaviour {
     private void TakeDamage(int Amount) {
         Debug.Assert(DamageTaken.Length > 0);
         PlayClip(DamageTaken[Random.Range(0, DamageTaken.Length)]);
-    }
-
-    void GameOver() {
-        Debug.Assert(GameOverJingle != null);
-        PlayClip(GameOverJingle);
     }
 }

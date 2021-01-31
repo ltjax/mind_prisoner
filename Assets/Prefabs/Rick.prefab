@@ -137,10 +137,10 @@ MonoBehaviour:
   FreeCamStart: {fileID: 8300000, guid: c0049d4ae4597e245b9eebe1cb1b0820, type: 3}
   FreeCamStop: {fileID: 8300000, guid: f199bd4d92ce66944a4cdb46f974e5d2, type: 3}
   RoomDelete: {fileID: 8300000, guid: 97fa6280afdc00f40aa32bdf5f0be8d1, type: 3}
-  GameOverJingle: {fileID: 8300000, guid: 6eabfcee9d9060d4da0c6781c58a7c2a, type: 3}
   CantDo:
   - {fileID: 8300000, guid: 859becb3e454dcc4fa1a2eda9d4ee7bb, type: 3}
   - {fileID: 8300000, guid: cca632a8d4c6e3448ac2898e78b81929, type: 3}
+  - {fileID: 8300000, guid: 2d39913ddb82f8244927b7a5ae2280e9, type: 3}
 --- !u!212 &4976632324547077184
 SpriteRenderer:
   m_ObjectHideFlags: 0
