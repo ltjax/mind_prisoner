@@ -36,7 +36,7 @@ public class ProjectileController : MonoBehaviour
             Debug.Log("Huh?");
         }
 
-        Debug.Log("Exploded!");
+        //Debug.Log("Exploded!");
     }
 
     public void Disarm()

@@ -292,7 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c633ca38c55a23240999be02afa6591c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 583581057}
 --- !u!1001 &1621973988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -667,6 +666,11 @@ PrefabInstance:
     - target: {fileID: 4976632324547077199, guid: 6180116fb826c5a4b8b1702b4c225c4a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110106497847937699, guid: 6180116fb826c5a4b8b1702b4c225c4a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
