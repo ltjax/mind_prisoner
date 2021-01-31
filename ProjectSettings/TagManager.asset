@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - GridGlobal
   - Room
+  - UI
   layers:
   - Default
   - TransparentFX
