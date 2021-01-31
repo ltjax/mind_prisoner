@@ -365,6 +365,12 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 116166665}
+    - target: {fileID: 704777065276746989, guid: 3aaabf3eca1639b4ea51053f4db6ef8b,
+        type: 3}
+      propertyPath: finish
+      value: 
+      objectReference: {fileID: 8044674306783877339, guid: 3ad90e007e10f5940ae63caca90766d9,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3aaabf3eca1639b4ea51053f4db6ef8b, type: 3}
 --- !u!1001 &1731854240

@@ -13,12 +13,13 @@ public class ConfiguredRoom
 
     public Transform room;
     public Transform[] doorElement;
+    public Transform finish;
+
+    public bool IsFinish => finish != null;
 }
 
 public class RoomManager : MonoBehaviour
 {
-    private static readonly Vector2 ROOM_SIZE = new Vector2(8.0f, 6.0f);
-
     public enum Direction
     {
         Left,
@@ -36,12 +37,15 @@ public class RoomManager : MonoBehaviour
         Vector2Int.down,
     };
 
-    public Transform room, enemy;
+    public Transform room;
+    public Transform enemy;
     public Transform blockW;
     public Transform blockN;
     public Transform blockE;
     public Transform blockS;
-    private Grid grid, enemyGrid;
+    public Transform finish;
+    private Grid grid;
+    private Grid enemyGrid;
 
     private IReadOnlyList<Transform> BlockList
     {
@@ -89,15 +93,15 @@ public class RoomManager : MonoBehaviour
 
         float maxDistanceSqr = maxDistance * maxDistance;
 
-        foreach (var each in offsetToDirection)
+        foreach (var (offset, direction) in offsetToDirection)
         {
             // The door position in cell-coordinates
-            var reference = (Vector2Int)cell + each.offset;
+            var reference = (Vector2Int)cell + offset;
             // The door position in world coordinates
             var point = (Vector2)grid.transform.TransformPoint(grid.CellToLocalInterpolated(reference));
 
             if ((point - position).sqrMagnitude < maxDistanceSqr)
-                return ((Vector2Int)cell, each.direction);
+                return ((Vector2Int)cell, direction);
         }
 
         return null;
@@ -142,6 +146,34 @@ public class RoomManager : MonoBehaviour
         UpdateTransitions(deleted.Concat(created));
     }
 
+
+    bool ShouldSpawnFinish()
+    {
+        const int THRESHOLD = 15;
+        if (roomId <= THRESHOLD)
+            return false;
+
+        // Don't spawn twice
+        foreach (var room in active)
+        {
+            if (room.Value.IsFinish)
+                return false;
+        }
+
+        // Probability goes to 1 for later rooms
+        var more = roomId - THRESHOLD;
+        float Probability = 1.0f - 1.0f / (more * 0.3f);
+        return Random.value <= Probability;
+    }
+
+    void SpawnFinish(Vector3 position, ConfiguredRoom room)
+    {
+        Debug.Log("Finish spawned!");
+        var spawned = Instantiate(this.finish);
+        room.finish = spawned;
+        spawned.position = position;        
+    }
+
     void CreateRoom(Vector2Int cell)
     {
         var position = grid.CellToLocal(new Vector3Int(cell.x, cell.y, 0));
@@ -150,13 +182,19 @@ public class RoomManager : MonoBehaviour
         instance.name = string.Format("Room ({0},{1}) / #{2}", cell.x, cell.y, roomId++);
         instance.position = position;
 
-        //instance.rotation = Quaternion.AngleAxis(-90.0f, new Vector3(1.0f, 0.0f, 0.0f));
-
         var result = new ConfiguredRoom(instance);
 
-        active.Add(cell, result);
+        // Either spawn the finish, or just enemies
+        if (ShouldSpawnFinish())
+        {
+            SpawnFinish(position, result);
+        }
+        else
+        {
+            PopulateRoomWithEnemies(result);
+        }
 
-        PopulateRoomWithEnemies(result);
+        active.Add(cell, result);
     }
 
     public void RemoveRoom(Vector2Int toDelete, Vector2Int floodStart)
@@ -263,8 +301,10 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    void Awake() {
-        if(Debug.isDebugBuild) {
+    void Awake()
+    {
+        if (Debug.isDebugBuild)
+        {
             Random.InitState(1234567);
         }
     }
@@ -277,6 +317,8 @@ public class RoomManager : MonoBehaviour
         Debug.Assert(room != null);
         Debug.Assert(grid != null);
         Debug.Assert(enemyGrid != null);
+        Debug.Assert(finish != null);
+        Debug.Assert(BlockList.All(x => x != null));
 
         CreateRoom(new Vector2Int(0, 0));
 
@@ -290,16 +332,12 @@ public class RoomManager : MonoBehaviour
         UpdateTransitions(active.Select(x => x.Key));
     }
 
-    // Update is called once per frame
-    void Update()
+    void PopulateRoomWithEnemies(ConfiguredRoom room)
     {
-
-    }
-
-    void PopulateRoomWithEnemies(ConfiguredRoom room) {
         // Pick a number from 2 to 5
         var enemyCount = Random.Range(2, 6);
-        for(int i = 0; i < enemyCount; i++) {
+        for (int i = 0; i < enemyCount; i++)
+        {
             var nEnemy = Instantiate(enemy, GetRandomLocalEnemyPosition(room.room), Quaternion.identity, room.room);
             nEnemy.name = "Enemy Blob [" + Random.Range(10000, 100000) + "]";
             var nEnemyControl = nEnemy.GetComponent<EnemyController>();
@@ -308,15 +346,18 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    Vector3 GetRandomLocalEnemyPosition(Transform roomTransform) {
+    Vector3 GetRandomLocalEnemyPosition(Transform roomTransform)
+    {
         var roomBounds = enemyGrid.GetBoundsLocal(enemyGrid.WorldToCell(roomTransform.position));
         return new Vector3(roomTransform.position.x + (Random.value - 0.5f) * roomBounds.size.x,
                            roomTransform.position.y + (Random.value - 0.5f) * roomBounds.size.y,
                            -0.5f);
     }
 
-    public bool TryGetRoomAt(Vector2Int GridCoord, out Transform Room) {
-        if(active.ContainsKey(GridCoord)) {
+    public bool TryGetRoomAt(Vector2Int GridCoord, out Transform Room)
+    {
+        if (active.ContainsKey(GridCoord))
+        {
             Room = active[GridCoord].room;
             return true;
         }
