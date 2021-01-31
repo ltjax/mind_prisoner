@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,11 +33,22 @@ public class CameraController : MonoBehaviour
 
         camera.farClipPlane = height + 1.0f;
         transform.position = new Vector3(position.x, position.y, -height);
+        
+        // Force 4:3 aspect ratio
+        var targetAspectRatio = 4f / 3f;
+        if(targetAspectRatio < camera.aspect) {
+            var diff = 1 - targetAspectRatio / camera.aspect;
+            camera.rect = new Rect(diff / 2, 0, 1 - diff, 1);
+        } else {
+            var diff = 1 - camera.aspect / targetAspectRatio;
+            camera.rect = new Rect(0, diff / 2, 1, 1 - diff);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (target != null)
         {
             var (move, ended) = SmoothMoveTo(target.Value);
