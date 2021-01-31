@@ -21,7 +21,9 @@ public class UnitAudio : MonoBehaviour {
     }
 
     private void PlayClip(AudioClip c) {
-        Debug.Assert(mySpeaker != null);
+        if(mySpeaker == null) {
+            return;
+        }
         // Initialize source list if necessary
         if(Sources == null) {
             Sources = new List<AudioSource>();
