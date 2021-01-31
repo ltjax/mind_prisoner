@@ -3,7 +3,9 @@ guid: bf5f27ef74a4cc3448bf2c493a87b8cb
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - healthBar: {instanceID: 0}
+  - dropClip: {fileID: 8300000, guid: 1063d0014a75f544a95114688fc691ef, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

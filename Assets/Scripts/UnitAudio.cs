@@ -10,6 +10,8 @@ public class UnitAudio : MonoBehaviour {
     public AudioClip ExplodeSound, AttackFirstWarning, AttackFinalWarning;
     public AudioClip FreeCamStart, FreeCamStop, RoomDelete;
     public AudioClip[] CantDo;
+    public AudioClip CrashSound;
+    public AudioClip FallSound;
     private GameObject mySpeaker;
     private List<AudioSource> Sources;
     private int currentStep = 0;
@@ -114,5 +116,15 @@ public class UnitAudio : MonoBehaviour {
     private void TakeDamage(int Amount) {
         Debug.Assert(DamageTaken.Length > 0);
         PlayClip(DamageTaken[Random.Range(0, DamageTaken.Length)]);
+    }
+
+    private void Crash()
+    {
+        PlayClip(CrashSound);
+    }
+
+    private void Fall()
+    {
+        PlayClip(FallSound);
     }
 }

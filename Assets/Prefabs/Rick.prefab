@@ -81,6 +81,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 859becb3e454dcc4fa1a2eda9d4ee7bb, type: 3}
   - {fileID: 8300000, guid: cca632a8d4c6e3448ac2898e78b81929, type: 3}
   - {fileID: 8300000, guid: 2d39913ddb82f8244927b7a5ae2280e9, type: 3}
+  CrashSound: {fileID: 8300000, guid: 1063d0014a75f544a95114688fc691ef, type: 3}
+  FallSound: {fileID: 8300000, guid: 5ed51e2fa9c5a1449897c7cf8e0a4993, type: 3}
 --- !u!212 &4976632324547077184
 SpriteRenderer:
   m_ObjectHideFlags: 0
