@@ -7,7 +7,7 @@ public class UnitAudio : MonoBehaviour {
     [Range(0, 1)]
     public float Volume;
     public AudioClip[] StepCycle, FireSounds;
-    public AudioClip ExplodeSound;
+    public AudioClip ExplodeSound, AttackFirstWarning, AttackFinalWarning;
     public AudioClip FreeCamStart, FreeCamStop, RoomDelete;
     public AudioClip[] CantDo;
     private GameObject mySpeaker;
@@ -97,5 +97,15 @@ public class UnitAudio : MonoBehaviour {
     private void PlayCantDo() {
         Debug.Assert(CantDo.Length > 0);
         PlayClip(CantDo[Random.Range(0, CantDo.Length)]);
+    }
+
+    private void WarnAttackFirst() {
+        Debug.Assert(AttackFirstWarning != null);
+        PlayClip(AttackFirstWarning);
+    }
+
+    private void WarnAttackFinal() {
+        Debug.Assert(AttackFinalWarning != null);
+        PlayClip(AttackFinalWarning);
     }
 }
