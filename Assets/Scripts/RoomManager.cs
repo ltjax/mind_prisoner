@@ -367,4 +367,9 @@ public class RoomManager : MonoBehaviour
         Room = null;
         return false;
     }
+
+    public bool HasRoom(Vector2Int cell)
+    {
+        return active.ContainsKey(cell);
+    }
 }

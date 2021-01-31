@@ -18,6 +18,7 @@ public class UnitController : MonoBehaviour {
     private Grid MyGrid;
     public Vector3Int MyGridPos;
     private RoomManager RoomManager;
+    private UIController uiController;
 
     private List<(KeyCode key, Vector2Int offset)> DirectionTable = new List<(KeyCode key, Vector2Int offset)> {
                 (KeyCode.LeftArrow, Vector2Int.left   ),
@@ -46,6 +47,7 @@ public class UnitController : MonoBehaviour {
         PointCameraAtMe();
         MyBody = GetComponent<CharacterController>();
         RoomManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<RoomManager>();
+        uiController = GameObject.Find("/UI").GetComponent<UIController>();
         healthBar.SetHealth(10);
 
         StartCoroutine(AnimationControl());
@@ -100,6 +102,7 @@ public class UnitController : MonoBehaviour {
             if(newGridPos != MyGridPos) {
                 MyGridPos = newGridPos;
                 MainCam.SendMessage(nameof(CameraController.MoveToCell), (Vector2Int)MyGridPos);
+                uiController.UpdateMinimap((Vector2Int)MyGridPos);
             }
         }
     }

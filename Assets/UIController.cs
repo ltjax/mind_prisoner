@@ -5,13 +5,29 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    private const int MINIMAP_SIZE = 5;
     Text hint;
+    List<Image> minimapPanel = new List<Image>();
+    RoomManager roomManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        roomManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<RoomManager>();
         hint = GetComponentInChildren<Text>();
+        for (int y = 0; y < MINIMAP_SIZE; ++y)
+        {
+            for (int x = 0; x < MINIMAP_SIZE; ++x)
+            {
+                var name = string.Format("UI/Minimap/Room{0}{1}", x, y);
+                var image = GameObject.Find(name).GetComponent<Image>();
+                Debug.Assert(image != null);
+                image.enabled = false;
+                minimapPanel.Add(image);
+            }
+        }
         Debug.Assert(hint != null);
+        UpdateMinimap(Vector2Int.zero);
     }
 
     // Update is called once per frame
@@ -48,5 +64,19 @@ public class UIController : MonoBehaviour
     public void LetGo()
     {
         ShowText("As I let go of my past, I feel like new paths are opening up...");
+    }
+
+    public void UpdateMinimap(Vector2Int center)
+    {
+        var offset = MINIMAP_SIZE / 2;
+        for (int y = 0; y < MINIMAP_SIZE; ++y)
+        {
+            for (int x = 0; x < MINIMAP_SIZE; ++x)
+            {
+                var index = y * MINIMAP_SIZE + x;
+                var cell = center + new Vector2Int(x - offset, y - offset);
+                minimapPanel[index].enabled = roomManager.HasRoom(cell);
+            }
+        }
     }
 }
